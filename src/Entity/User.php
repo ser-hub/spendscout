@@ -46,9 +46,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tag::class)]
     private Collection $tags;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Entry::class, orphanRemoval: true)]
+    private Collection $entries;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->entries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +197,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($tag->getUser() === $this) {
                 $tag->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Entry>
+     */
+    public function getEntries(): Collection
+    {
+        return $this->entries;
+    }
+
+    public function addEntry(Entry $entry): static
+    {
+        if (!$this->entries->contains($entry)) {
+            $this->entries->add($entry);
+            $entry->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntry(Entry $entry): static
+    {
+        if ($this->entries->removeElement($entry)) {
+            // set the owning side to null (unless already changed)
+            if ($entry->getUser() === $this) {
+                $entry->setUser(null);
             }
         }
 
