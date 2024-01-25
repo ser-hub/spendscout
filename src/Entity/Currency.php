@@ -41,14 +41,14 @@ class Currency
         return $this->entry;
     }
 
-    public function setDate(Entry $date): static
+    public function setEntry(Entry $entry): static
     {
         // set the owning side of the relation if necessary
-        if ($date->getCurrency() !== $this) {
-            $date->setCurrency($this);
+        if ($entry->getCurrency() !== $this) {
+            $entry->setCurrency($this);
         }
 
-        $this->date = $date;
+        $this->entry = $entry;
 
         return $this;
     }
