@@ -22,4 +22,12 @@
         <button type="submit">login</button>
     </form>
     <a href="{{ path('app_forgot_password_request')}}">forgot my password</a>
+
+    <a href="{{ path('app_register')}}">Sign in</a>
+
+    {% for message in app.flashes('registration_success') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
 {% endblock %}
