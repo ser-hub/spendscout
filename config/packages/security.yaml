@@ -36,17 +36,16 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        
         #admin
         - { path: ^/admin|users, roles: ROLE_ADMIN }
         - { path: ^/users/\d+$, roles: ROLE_ADMIN }
 
         #user
-        - { path: ^/reports|profile, roles: IS_AUTHENTICATED }
-        - { path: ^/entries, roles: IS_AUTHENTICATED }
-        - { path: ^/entries/\d+$, roles: IS_AUTHENTICATED }
-        - { path: ^/tags, roles: IS_AUTHENTICATED }
-        - { path: ^/tags/\d+$, roles: IS_AUTHENTICATED }
+        - { path: ^/reports|profile, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/entries, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/entries/\d+$, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/tags, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/tags/\d+$, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
