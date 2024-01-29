@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -19,6 +20,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Email(
+        message: '{{ value }} is not a valid email',
+    )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -31,14 +36,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]{0,64}$/',
+        message: 'First name is longer than 64 characters or contains illegal symbols',
+    )]
     #[ORM\Column(length: 64)]
     private ?string $first_name = null;
 
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]{0,64}$/',
+        message: 'Last name is longer than 64 characters or contains illegal symbols',
+    )]
     #[ORM\Column(length: 64)]
     private ?string $last_name = null;
 
     #[ORM\Column]
-    private ?bool $is_active = null;
+    private ?bool $is_active = true;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
