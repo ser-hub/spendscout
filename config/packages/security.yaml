@@ -42,10 +42,11 @@ security:
 
         #user
         - { path: ^/reports|profile, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/entries, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/entries/\d+$, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/tags, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/tags/\d+$, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/entries, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/entries/\d+$, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/tags, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/tags/\d+$, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/currencies, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
