@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CurrencyRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
 class Currency
@@ -13,11 +15,15 @@ class Currency
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Regex(
+        paatern: '/^[A-Z]{0,3}$/',
+        message: 'Invalid currency code. Use 3 uppercase letters.'
+    )]
     #[ORM\Column(length: 3)]
     private ?string $code = null;
 
-    #[ORM\OneToOne(mappedBy: 'currency', cascade: ['persist', 'remove'])]
-    private ?Entry $entry = null;
+    #[ORM\OneToMany(mappedBy: 'currency', targetEntity: Entry::class)]
+    private Collection $entries;
 
     public function getId(): ?int
     {
@@ -36,19 +42,27 @@ class Currency
         return $this;
     }
 
-    public function getDate(): ?Entry
+    /**
+     * @return Collection<int, Entry>
+     */
+    public function getEntries(): Collection
     {
-        return $this->entry;
+        return $this->entries;
     }
 
-    public function setEntry(Entry $entry): static
+    public function addEntry(Entry $entry): static
     {
-        // set the owning side of the relation if necessary
-        if ($entry->getCurrency() !== $this) {
+        if (!$this->entries->contains($entry)) {
+            $this->entries->add($entry);
             $entry->setCurrency($this);
         }
 
-        $this->entry = $entry;
+        return $this;
+    }
+
+    public function circularReferenceSafe(): Currency
+    {
+        $this->entries->map(function ($entry) { return $entry->circularReferenceSafe(); });
 
         return $this;
     }

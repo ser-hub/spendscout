@@ -6,6 +6,8 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
@@ -15,14 +17,22 @@ class Tag
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(
+        max: 10,
+        maxMessage: 'Name contains too many characters',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Ignore]
     #[ORM\ManyToOne(inversedBy: 'tags')]
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'tag', targetEntity: Entry::class)]
     private Collection $entries;
+
+    // properties used for avoiding CIRCULAR_REFERENCE error
+    private $userId = null;
 
     public function __construct()
     {
@@ -86,5 +96,18 @@ class Tag
         }
 
         return $this;
+    }
+
+    public function circularReferenceSafe(): Tag 
+    {
+        $this->userId = $this->user->getId();
+        $this->entries->map(function ($entry) {return $entry->circularReferenceSafe(); });
+
+        return $this;
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
     }
 }
