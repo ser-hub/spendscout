@@ -14,8 +14,6 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="_password">
 
-        {# on success redirect to app_home #}
-        <input type="hidden" name="_target_path" value="/home">
         {# CSRF protection for the login form #}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

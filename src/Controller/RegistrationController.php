@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager
     ) {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home');
         }
 
         $user = new User();

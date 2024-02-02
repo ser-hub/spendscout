@@ -17,6 +17,8 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
+                default_target_path: app_home
+                always_use_default_target_path: true
                 login_path: app_login
                 check_path: app_login
             login_throttling: null
@@ -37,16 +39,16 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         #admin
-        - { path: ^/admin|users, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/users/\d+$, roles: ROLE_ADMIN }
 
         #user
-        - { path: ^/reports|profile, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/entries, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/entries/\d+$, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/tags, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/tags/\d+$, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/currencies, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/reports|profile, roles: ROLE_USER }
+        - { path: ^/api/entries, roles: ROLE_USER }
+        - { path: ^/api/entries/*, roles: ROLE_USER }
+        - { path: ^/api/tags, roles: ROLE_USER }
+        - { path: ^/api/tags/*, roles: ROLE_USER }
+        - { path: ^/api/currencies, roles: ROLE_USER }
 
 when@test:
     security:
