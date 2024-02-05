@@ -40,14 +40,12 @@ security:
     access_control:
         #admin
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/users/\d+$, roles: ROLE_ADMIN }
+        - { path: ^/api/users/\d+$, roles: ROLE_ADMIN }
 
         #user
-        - { path: ^/reports|profile, roles: ROLE_USER }
+        - { path: ^/reports|profile|my-tags, roles: ROLE_USER }
         - { path: ^/api/entries, roles: ROLE_USER }
-        - { path: ^/api/entries/*, roles: ROLE_USER }
         - { path: ^/api/tags, roles: ROLE_USER }
-        - { path: ^/api/tags/*, roles: ROLE_USER }
         - { path: ^/api/currencies, roles: ROLE_USER }
 
 when@test:

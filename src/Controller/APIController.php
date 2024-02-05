@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[Route('/api', name: 'api_')]
 class APIController extends AbstractController
 {
+    private const OBJECT_NOT_FOUND_MESSAGE = 'Object not found.';
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -44,14 +45,35 @@ class APIController extends AbstractController
     }
 
     #[Route('/entries/{id<\d+>}', name: 'update_entry', methods: ['PUT'], format: 'json')]
-    public function updateEntry(): JsonResponse
+    public function updateEntry(?Entry $entry, #[MapRequestPayload(acceptFormat: 'json')] Entry $entryDTO): JsonResponse
     {
-        return $this->json('');
+        if (!$entry) {
+            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+
+        // get the objects for the specific IDs
+        $currency = $this->entityManager->getRepository(Currency::class)->find($entryDTO->getCurrencyId());
+        $tag = $this->entityManager->getRepository(Tag::class)->find($entryDTO->getTagId());
+
+        $entry->setName($entryDTO->getName());
+        $entry->setIsExpense($entryDTO->isIsExpense());
+        $entry->setAmount($entryDTO->getAmount());
+        $entry->setDate($entryDTO->getDate());
+        $entry->setCurrency($currency);
+        $entry->setTag($tag);
+
+        $this->entityManager->flush();
+
+        return $this->json($entry->circularReferenceSafe());
     }
 
     #[Route('/entries/{id<\d+>}', name: 'delete_entry', methods: ['DELETE'])]
     public function deleteEntry($entry): JsonResponse
     {
+        if (!$entry) {
+            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+
         $this->entityManager->remove($entry);
         $this->entityManager->flush();
 
@@ -76,17 +98,25 @@ class APIController extends AbstractController
     }
 
     #[Route('/tags/{id<\d+>}', name: 'update_tag', methods: ['PUT'], format: 'json')]
-    public function updateTag(Tag $tag, Request $request): JsonResponse
+    public function updateTag(Tag $tag, #[MapRequestPayload(acceptFormat: 'json')] Tag $tagDTO): JsonResponse
     {
-        $tag->setName($request->getPayload()->get('name'));
+        if (!$tag) {
+            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+
+        $tag->setName($tagDTO->getName());
         $this->entityManager->flush();
 
         return $this->json($tag->circularReferenceSafe());
     }
 
     #[Route('/tags/{id<\d+>}', name: 'delete_tag', methods: ['DELETE'])]
-    public function deleteTag(Tag $tag): JsonResponse
+    public function deleteTag(?Tag $tag): JsonResponse
     {
+        if (!$tag) {
+            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+
         $this->entityManager->remove($tag);
         $this->entityManager->flush();
 
@@ -103,5 +133,15 @@ class APIController extends AbstractController
         }
 
         return $this->json($allCurrencies);
+    }
+
+    #[Route('/users/{id<\d+>}', name: 'get_user_data', methods: ['GET'])]
+    public function getUserData(?User $user): JsonResponse
+    {
+        if (!$user) {
+            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+        
+        return $this->json($user);
     }
 }

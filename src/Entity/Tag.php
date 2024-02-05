@@ -17,8 +17,9 @@ class Tag
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
     #[Assert\Length(
-        max: 10,
+        max: 255,
         maxMessage: 'Name contains too many characters',
     )]
     #[ORM\Column(length: 255)]
@@ -94,6 +95,13 @@ class Tag
                 $entry->setTag(null);
             }
         }
+
+        return $this;
+    }
+
+    public function clearEntries(): static
+    {
+        $this->entries->clear();
 
         return $this;
     }
