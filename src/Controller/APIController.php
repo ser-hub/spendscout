@@ -32,6 +32,17 @@ class APIController extends AbstractController
         return $this->json($user);
     }
 
+    #[Route('/user', name: 'update_user', methods: ['PUT'], format: 'json')]
+    public function updateUser(#[MapRequestPayload(acceptFormat: 'json')] User $user): JsonResponse
+    {
+        $this->getUser()->setFirstName($user->getFirstName());
+        $this->getUser()->setLastName($user->getLastName());
+
+        $this->entityManager->flush();
+
+        return $this->json($user);
+    }
+
     #[Route('/entries', name: 'get_all_user_entries', methods: ['GET'])]
     public function getAllUserEntries(): JsonResponse
     {

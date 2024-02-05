@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -33,6 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    #[Ignore]
     #[ORM\Column]
     private ?string $password = null;
 
@@ -191,9 +193,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getTags(): Collection
     {
-        return $this->tags;
+        return $this->tags->map(function ($tag) { return $tag->clearEntries(); });
     }
 
+    #[Ignore]
     public function getTagsCircularReferenceSafe(): Collection
     {
         return $this->tags->map(function ($tag) { return $tag->circularReferenceSafe(); });
@@ -229,6 +232,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->entries;
     }
 
+    #[Ignore]
     public function getEntriesCircularReferenceSafe(): Collection
     {
         return $this->entries->map(function ($entry) { return $entry->circularReferenceSafe(); });
