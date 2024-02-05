@@ -22,6 +22,16 @@ class APIController extends AbstractController
     ) {
     }
 
+    #[Route('/users/{id<\d+>}', name: 'get_all_user_data', methods: ['GET'])]
+    public function getAllUserData(?User $user): JsonResponse
+    {
+        if (!$user) {
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+        
+        return $this->json($user);
+    }
+
     #[Route('/entries', name: 'get_all_user_entries', methods: ['GET'])]
     public function getAllUserEntries(): JsonResponse
     {
@@ -82,8 +92,17 @@ class APIController extends AbstractController
     #[Route('/tags', name: 'get_all_user_tags', methods: ['GET'])]
     public function getAllUserTags(): JsonResponse
     {
-        $user = $this->entityManager->getRepository(User::class)->find(2);
-        return $this->json($user->getTagsCircularReferenceSafe());
+        return $this->json($this->getUser()->getTagsCircularReferenceSafe());
+    }
+
+    #[Route('/tags/{id<\d+>}', name: 'get_tag', methods: ['GET'])]
+    public function getTag(?Tag $tag): JsonResponse
+    {
+        if (!$tag) {
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+
+        return $this->json($tag);
     }
 
     #[Route('/tags', name: 'add_tag', methods: ['POST'], format: 'json')]
@@ -132,15 +151,5 @@ class APIController extends AbstractController
         }
 
         return $this->json($allCurrencies);
-    }
-
-    #[Route('/users/{id<\d+>}', name: 'get_user_data', methods: ['GET'])]
-    public function getUserData(?User $user): JsonResponse
-    {
-        if (!$user) {
-            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
-        }
-        
-        return $this->json($user);
     }
 }
