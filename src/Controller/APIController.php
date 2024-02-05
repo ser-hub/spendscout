@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/api', name: 'api_')]
 class APIController extends AbstractController
@@ -48,7 +47,7 @@ class APIController extends AbstractController
     public function updateEntry(?Entry $entry, #[MapRequestPayload(acceptFormat: 'json')] Entry $entryDTO): JsonResponse
     {
         if (!$entry) {
-            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
 
         // get the objects for the specific IDs
@@ -61,7 +60,7 @@ class APIController extends AbstractController
         $entry->setDate($entryDTO->getDate());
         $entry->setCurrency($currency);
         $entry->setTag($tag);
-
+   
         $this->entityManager->flush();
 
         return $this->json($entry->circularReferenceSafe());
@@ -71,7 +70,7 @@ class APIController extends AbstractController
     public function deleteEntry($entry): JsonResponse
     {
         if (!$entry) {
-            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
 
         $this->entityManager->remove($entry);
@@ -101,7 +100,7 @@ class APIController extends AbstractController
     public function updateTag(Tag $tag, #[MapRequestPayload(acceptFormat: 'json')] Tag $tagDTO): JsonResponse
     {
         if (!$tag) {
-            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
 
         $tag->setName($tagDTO->getName());
@@ -114,7 +113,7 @@ class APIController extends AbstractController
     public function deleteTag(?Tag $tag): JsonResponse
     {
         if (!$tag) {
-            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
 
         $this->entityManager->remove($tag);
@@ -139,7 +138,7 @@ class APIController extends AbstractController
     public function getUserData(?User $user): JsonResponse
     {
         if (!$user) {
-            return $this->json(APIController::OBJECT_NOT_FOUND_MESSAGE, 404);
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
         
         return $this->json($user);
