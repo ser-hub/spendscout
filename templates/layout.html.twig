@@ -2,13 +2,51 @@
 
 {% block body %}
 
-{% block page_header %}
-{% endblock %}
+	{% block page_header %}
+		<div class="page-header">
+			<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
+			<span class="logo-caption">SpendScout</span>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<nav class="header-nav">
+					<a href="{{ path('app_reports') }}">Reports</a>
+					<a href="{{ path('app_my_tags') }}">My tags</a>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('app_admin') }}">Admin panel</a>
+					{% endif %}
+					<div class="user-controls">
+						<div class="profile-picture" style="background-color:rgb(
+							{{ randomRGBFromString(app.user.firstName) }},
+							{{ randomRGBFromString(app.user.lastName) }},
+							{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }})">
+							{{ app.user.firstName|first|upper }}{{ app.user.lastName|first|upper }}
+						</div>
+						<span class="username">{{ app.user.firstName }}
+							{{ app.user.lastName }}</span>
+						<a href="{{ logout_path() }}">Log out</a>
+					</div>
+				</nav>
+                {% elseif app.request.pathInfo == '/login' %}
+                    <a href="{{ path('app_register') }}" class="register-btn">Register</a>
+                {% elseif app.request.pathInfo == '/register'%}
+                    <a href="{{ path('app_login') }}" class="login-btn">Log in</a>
+			{% endif %}
+		</div>
+	{% endblock %}
 
-{% block page_content %}
-{% endblock %}
+	{% block page_content %}{% endblock %}
 
-{% block page_footer %}
-{% endblock %}
+	{% block page_footer %}
+		<div class="page-footer">
+			<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
+			<span class="logo-caption">SpendScout</span>
+            <div class="footer-links">
+                <!-- Links go here -->
+            </div>
+			<div class="trademark">
+				© SpendScout by Perspecta. 2024. An expense tracking app.
+			</div>
+		</div>
+
+	{% endblock %}
 
 {% endblock %}
