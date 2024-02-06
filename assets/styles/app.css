@@ -39,6 +39,24 @@ a {
     padding-bottom: 10px;
 }
 
+.layout-1-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    height: 84vh;
+}
+
+.border-form-wrapper {
+    border: 1px lightgray solid;
+    padding: 1rem 3rem 1.5rem 2rem;
+}
+
+.caption {
+    font-size: 28pt;
+    text-align: center;
+}
+
 .logo-caption {
     font-size: 1.4rem;
 }
@@ -99,6 +117,10 @@ a {
     background-color: var(--main-color);
 }
 
+.login-btn {
+    background-color: white;
+}
+
 ul {
     margin-block-start: .5rem;
     margin-block-end: 0;
@@ -112,4 +134,45 @@ ul {
 
 li::marker {
     color: red;
+}
+
+.names-wrapper {
+    display: flex;
+    gap: 1rem;
+}
+
+.names-wrapper div {
+    width: 100%;
+}
+
+label {
+    font-size: .8rem;
+}
+
+input,
+form .register-btn,
+form .login-btn {
+    margin-top: .6rem;
+}
+
+input[type=password],
+input[type=email],
+input[type=text] {
+    width: 100%;
+    padding: .3rem;
+}
+
+.proportion-40 {
+    width: 40%;
+}
+
+.login-bottom .login-btn {
+    margin: 0;
+}
+
+.login-bottom {
+    margin-top: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

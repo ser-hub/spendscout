@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block page_content %}
-	<div class="register-wrapper">
-		<div class="register-caption">Smart money moves start here.</div>
-		<div class="register-form-wrapper">
+	<div class="layout-1-2">
+		<div class="caption">Smart money moves start here.</div>
+		<div class="border-form-wrapper">
 			{% for flash_error in app.flashes('verify_email_error') %}
 				<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 			{% endfor %}

@@ -1,31 +1,38 @@
 {% extends 'layout.html.twig' %}
 
-{# ... #}
+{% block title %}
+	Log in
+{% endblock %}
 
 {% block page_content %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+	{% if error %}
+		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+	{% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+	<div class="layout-1-2">
+		<div class="caption proportion-40">Smart spending, smarter saving. Login now.</div>
+		<div class="border-form-wrapper">
+			<h3>Log into your account</h3>
+			<form action="{{ path('app_login') }}" method="post">
+				<input type="text" id="username" name="_username" placeholder="Email" value="{{ last_username }}">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+				<input
+				type="password" id="password" name="_password" placeholder="Password">
 
-        {# CSRF protection for the login form #}
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				{# CSRF protection for the login form #}
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit">login</button>
-    </form>
-    <a href="{{ path('app_forgot_password_request')}}">forgot my password</a>
+				<div class="login-bottom">
+					<button type="submit" class="login-btn">Log in</button>
+					<a href="{{ path('app_forgot_password_request')}}">Forgot my password</a>
+				</div>
+			</form>
 
-    <a href="{{ path('app_register')}}">Sign in</a>
-
-    {% for message in app.flashes('registration_success') %}
-    <div class="flash-notice">
-        {{ message }}
-    </div>
-{% endfor %}
+			{% for message in app.flashes('registration_success') %}
+				<div class="flash-notice">
+					{{ message }}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

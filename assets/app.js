@@ -7,10 +7,4 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
-const path = window.location.pathname;
-
-if (path === '/register') {
-    import('./styles/register.css');
-}
-
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
