@@ -1,0 +1,42 @@
+.register-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    height: 84vh;
+}
+
+.register-form-wrapper {
+    border: 1px lightgray solid;
+    padding: 1rem 3rem 1.5rem 2rem;
+}
+
+.register-caption {
+    font-size: 28pt;
+    text-align: center;
+}
+
+.names-wrapper {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.names-wrapper div {
+    width: 100%;
+}
+
+label {
+    font-size: .8rem;
+}
+
+input,
+.register-btn {
+    margin-top: .6rem;
+}
+
+input[type=password],
+input[type=email],
+input[type=text] {
+    width: 100%;
+    padding: .3rem;
+}

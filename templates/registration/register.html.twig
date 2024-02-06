@@ -1,27 +1,40 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}
+	Register
+{% endblock %}
 
 {% block page_content %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+	<div class="register-wrapper">
+		<div class="register-caption">Smart money moves start here.</div>
+		<div class="register-form-wrapper">
+			{% for flash_error in app.flashes('verify_email_error') %}
+				<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+			{% endfor %}
+			<h3>Create your SpendScout account here</h3>
+			<div class="help-text">Hover the fields for requirements</div>
 
-    <h1>Register</h1>
+			{{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.firstName) }}
-        {{ form_row(registrationForm.lastName) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
+			{{ form_start(registrationForm) }}
+			<div class="names-wrapper" title="Can only contain letters up to 64">
+				{{ form_row(registrationForm.firstName) }}
+				{{ form_row(registrationForm.lastName) }}
+			</div>
+			<div title="Must contain @{domain_name}">
+				{{ form_row(registrationForm.email) }}
+			</div>
+			<div title="1 lowercase and 1 uppercase letter, 1 number, 1 special symbol, 8 characters total">
+				{{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.terms, {
-            label: 'Agree to our terms'
+			</div>
+			{{ form_row(registrationForm.terms, {
+            label: 'Terms and conditions'
         }) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+			<button type="submit" class="register-btn">Register</button>
+			{{ form_end(registrationForm) }}
+		</div>
+	</div>
 {% endblock %}

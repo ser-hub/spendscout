@@ -40,14 +40,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]{0,64}$/',
-        message: 'First name can only contain letters and can not be longer than 64',
+        message: 'First name does not meet the requirements',
     )]
     #[ORM\Column(length: 64)]
     private ?string $first_name = null;
 
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]{0,64}$/',
-        message: 'First name can only contain letters and can not be longer than 64',
+        message: 'Last name does not meet the requirements',
     )]
     #[ORM\Column(length: 64)]
     private ?string $last_name = null;
