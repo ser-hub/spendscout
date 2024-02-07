@@ -39,7 +39,7 @@ a {
     padding-bottom: 10px;
 }
 
-.layout-1-2 {
+.layout-horizontal {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -175,4 +175,12 @@ input[type=text] {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.login-bottom a {
+    font-size: .8rem;
+}
+
+.reset-password-email {
+    margin-bottom: .3rem;
 }

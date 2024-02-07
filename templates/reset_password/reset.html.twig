@@ -1,12 +1,17 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Reset your password
+{% endblock %}
 
 {% block page_content %}
-    <h1>Reset your password</h1>
+	<div class="layout-horizontal">
+		<div class="border-form-wrapper" style="width: 20%">
+			<h3>Reset your password</h3>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+			{{ form_start(resetForm) }}
+			{{ form_row(resetForm.plainPassword) }}
+			<button class="btn btn-primary">Reset password</button>
+			{{ form_end(resetForm) }}
+		</div>
+	</div>
 {% endblock %}

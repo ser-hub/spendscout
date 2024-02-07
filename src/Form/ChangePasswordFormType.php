@@ -20,6 +20,7 @@ class ChangePasswordFormType extends AbstractType
                 'options' => [
                     'attr' => [
                         'autocomplete' => 'new-password',
+                        'class' => 'reset-password-email'
                     ],
                 ],
                 'first_options' => [
