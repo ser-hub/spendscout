@@ -1,3 +1,6 @@
+###> custom ###
+.env
+###< custom ###
 
 ###> symfony/framework-bundle ###
 /.env.local
