@@ -1,5 +1,6 @@
 ###> custom ###
 .env
+composer.lock
 ###< custom ###
 
 ###> symfony/framework-bundle ###

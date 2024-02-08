@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_content %}
-	<div class="layout-horizontal">
+	<div class="layout-horizontal space-evenly">
 		<div class="caption">Smart money moves start here.</div>
 		<div class="border-form-wrapper">
 			{% for flash_error in app.flashes('verify_email_error') %}
@@ -17,23 +17,19 @@
 			{{ form_errors(registrationForm) }}
 
 			{{ form_start(registrationForm) }}
-			<div class="names-wrapper" title="Can only contain letters up to 64">
+			<div class="names-wrapper">
 				{{ form_row(registrationForm.firstName) }}
 				{{ form_row(registrationForm.lastName) }}
 			</div>
-			<div title="Must contain @{domain_name}">
 				{{ form_row(registrationForm.email) }}
-			</div>
-			<div title="1 lowercase and 1 uppercase letter, 1 number, 1 special symbol, 8 characters total">
 				{{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-			</div>
 			{{ form_row(registrationForm.terms, {
             label: 'Terms and conditions'
         }) }}
 
-			<button type="submit" class="register-btn">Register</button>
+			<button type="submit" class="yellow-btn">Register</button>
 			{{ form_end(registrationForm) }}
 		</div>
 	</div>

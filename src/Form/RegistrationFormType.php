@@ -19,14 +19,23 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('firstName', null, [
-                'attr' => ['placeholder' => 'First Name'],
-                ])
+                'attr' => [
+                    'placeholder' => 'First Name',
+                    'title' => 'Can only contain letters up to 64',
+                ],
+            ])
             ->add('lastName', null, [
-                'attr' => ['placeholder' => 'Last Name']
-                ])
+                'attr' => [
+                    'placeholder' => 'Last Name',
+                    'title' => 'Can only contain letters up to 64',
+                ]
+            ])
             ->add('email', null, [
-                'attr' => ['placeholder' => 'Email']
-                ])
+                'attr' => [
+                    'placeholder' => 'Email',
+                    'title' => 'Must contain @{domain_name}',
+                ]
+            ])
             ->add('terms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => new IsTrue([
@@ -40,7 +49,8 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'placeholder' => 'Password',
-            ],
+                    'title' => "1 lowercase and 1 uppercase letter, 1 number, 1 special symbol, 8 characters total",
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',

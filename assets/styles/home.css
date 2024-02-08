@@ -1,0 +1,108 @@
+.entry-grid {
+    border: 1px lightgray solid;
+    padding: .5rem 1rem;
+}
+
+.entry-grid-controls button {
+    border: 0;
+    background-color: white;
+    font-size: 1rem;
+}
+
+.entry-grid-controls {
+    padding: 2rem .5rem 1rem .5rem; 
+}
+
+.entries {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.middle {
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.entry-form-wrapper {
+    padding: .5rem;
+    width: 15%;
+}
+
+.entry-wrapper {
+    border: 1px black solid;
+    border-radius: 20px;
+    padding: .5rem 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.entry-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-date {
+    margin: 0 2rem;
+}
+
+.accent {
+    color: var(--secondary-color);
+}
+
+.entry-btn {
+    height: 10px;
+    width: 10px;
+    border-radius: 99px;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+}
+
+#income {
+    accent-color: green;
+}
+
+#expense {
+    accent-color: red;
+    margin-top: .4rem;
+}
+
+.entry-form-radios {
+    border: 1px lightgray solid;
+    border-radius: 20px;
+    padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+}
+
+.entry-form button {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+select,
+input[type=date] {
+    width: 100%;
+    padding: .3rem;
+}
+
+input[type=radio],
+.entry-form-radios label,
+.fa-solid {
+    cursor: pointer;
+}
+
+.underline {
+    text-decoration: underline;
+}

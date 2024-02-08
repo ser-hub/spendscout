@@ -26,9 +26,9 @@
 					</div>
 				</nav>
                 {% elseif app.request.pathInfo == '/login' %}
-                    <a href="{{ path('app_register') }}" class="register-btn">Register</a>
+                    <a href="{{ path('app_register') }}" class="yellow-btn">Register</a>
                 {% elseif app.request.pathInfo == '/register'%}
-                    <a href="{{ path('app_login') }}" class="login-btn">Log in</a>
+                    <a href="{{ path('app_login') }}" class="white-btn">Log in</a>
 			{% endif %}
 		</div>
 	{% endblock %}

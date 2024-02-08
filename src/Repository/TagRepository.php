@@ -21,6 +21,20 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findDefaultTags(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM Tag t
+            WHERE t.user_id is null
+            ';
+
+        $resultSet = $conn->executeQuery($sql);
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Tag[] Returns an array of Tag objects
 //     */

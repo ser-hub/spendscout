@@ -1,20 +1,81 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('styles/home.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block page_content %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello Home ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/VICTUS/Desktop/spendscout/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/VICTUS/Desktop/spendscout/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="middle layout-horizontal">
+		<div class="entry-grid">
+			<div class="entries">
+			<div class="entry-wrapper">
+				<div class="entry-btn green"></div>
+				<div class="entry-currency">35.99</div>
+				<div class="entry-data">
+					<span class="accent">Tag</span>
+					<span>Name</span>
+				</div>
+				<div class="entry-date">1/17/2024</div>
+				<i class="fa-solid fa-pencil fa-xl"></i>
+				<i class="fa-solid fa-trash fa-xl"></i>
+			</div>
+			<div class="entry-wrapper">
+				<div class="entry-btn red"></div>
+				<div class="entry-currency">91.12</div>
+				<div class="entry-data">
+					<span class="accent">Tag</span>
+					<span>Name</span>
+				</div>
+				<div class="entry-date">1/17/2024</div>
+				<i class="fa-solid fa-pencil fa-xl"></i>
+				<i class="fa-solid fa-trash fa-xl"></i>
+			</div>
+			</div>
+			<div class="entry-grid-controls">
+			<button class="entry-filter-btn">Filter</button>
+			<button class="entry-sort-btn">Sort</button>
+			<span class="underline">by</span>
+			<button class="date-btn">date</button>
+			<button class="control-2"> </button>
+			<div class="control-3"></div>
+			</div>
+		</div>
+		<div class="entry-form-wrapper">
+			<form class="entry-form">
+				<div class="entry-form-radios" data-controller="radio">
+					<input type="radio" id="income" name="is_expense" data-action="click->radio#selectIncome">
+					<label for="income" data-radio-target="income">I received money</label><br>
+					<input type="radio" id="expense" name="is_expense" data-action="click->radio#selectExpense">
+					<label for="expense" data-radio-target="expense">I spent moeny</label>
+				</div>
+				<input type="text" id="name" name="_name" placeholder="From/On">
+				<select name="tags" id="tags">
+					{% for tag in user_tags %}
+						<option value="{{ tag.id }}">
+							{{ tag.name }}
+						</option>
+					{% endfor %}
+					{% for tag in default_tags %}
+						<option value="{{ tag.id }}">
+							{{ tag.name }}
+						</option>
+					{% endfor %}
+				</select>
+				<input type="text" id="amount" name="_amount" placeholder="Amount" title="Format: .99">
+				<select name="currencies" id="currencies">
+					{% for currency in currencies %}
+						<option value="{{ currency.id }}">
+							{{ currency.code|currency_symbol('bg') }}
+							({{ currency.code }})
+						</option>
+					{% endfor %}
+				</select>
+				<input type="date" id="entry-date" name="entry-date"/>
+				<button type="submit" class="yellow-btn">Save</button>
+			</form>
+		</div>
+	</div>
 {% endblock %}

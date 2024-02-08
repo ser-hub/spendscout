@@ -5,14 +5,16 @@
 {% endblock %}
 
 {% block page_content %}
-	{% if error %}
-		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-	{% endif %}
-
-	<div class="layout-horizontal">
+	<div class="layout-horizontal space-evenly">
 		<div class="caption proportion-40">Smart spending, smarter saving. Login now.</div>
 		<div class="border-form-wrapper">
+
 			<h3>Log into your account</h3>
+
+			{% if error %}
+				<div class="login-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
+
 			<form action="{{ path('app_login') }}" method="post">
 				<input type="text" id="username" name="_username" placeholder="Email" value="{{ last_username }}">
 
@@ -23,7 +25,7 @@
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				<div class="login-bottom">
-					<button type="submit" class="login-btn">Log in</button>
+					<button type="submit" class="white-btn">Log in</button>
 					<a href="{{ path('app_forgot_password_request')}}">Forgot my password</a>
 				</div>
 			</form>
