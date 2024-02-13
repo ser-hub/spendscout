@@ -4,6 +4,10 @@
 	Register
 {% endblock %}
 
+{% block stylesheets %}
+	<link href="{{ asset('styles/register.css') }}" rel="stylesheet" data-turbo-track="reload">
+{% endblock %}
+
 {% block page_content %}
 	<div class="layout-horizontal space-evenly">
 		<div class="caption">Smart money moves start here.</div>
@@ -16,18 +20,18 @@
 
 			{{ form_errors(registrationForm) }}
 
-			{{ form_start(registrationForm) }}
-			<div class="names-wrapper">
+			{{ form_start(registrationForm, {attr: {id: 'registration-form'}}) }}
+			<span class="names-wrapper">
 				{{ form_row(registrationForm.firstName) }}
 				{{ form_row(registrationForm.lastName) }}
-			</div>
+			</span>
 				{{ form_row(registrationForm.email) }}
-				{{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+				{{ form_row(registrationForm.plainPassword) }}
+				<div>
 			{{ form_row(registrationForm.terms, {
             label: 'Terms and conditions'
         }) }}
+		</div>
 
 			<button type="submit" class="yellow-btn">Register</button>
 			{{ form_end(registrationForm) }}

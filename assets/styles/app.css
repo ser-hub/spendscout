@@ -18,6 +18,12 @@ form button {
     width: inherit;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
 a {
     text-decoration: none;
     color: var(--secondary-color);
@@ -32,13 +38,13 @@ a {
 
 .page-header {
     margin-top: .5rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .page-header > span, nav {
-    padding-top: 15px;
-}
-
-.page-footer > span, nav {
     padding-top: 15px;
 }
 
@@ -52,7 +58,6 @@ a {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    height: 84vh;
 }
 
 .space-evenly {
@@ -61,7 +66,7 @@ a {
 
 .border-form-wrapper {
     border: 1px lightgray solid;
-    padding: 1rem 3rem 1.5rem 2rem;
+    padding: 1rem 2rem 1.5rem 2rem;
 }
 
 .caption {
@@ -69,16 +74,23 @@ a {
     text-align: center;
 }
 
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+}
+
 .logo-caption {
     font-size: 1.4rem;
+    margin-top: 1rem;
 }
 
 .header-nav {
-    width: 100%;
     display: flex;
-    gap: .7rem;
+    gap: 0.7rem;
     margin-left: 1rem;
+    flex-wrap: wrap;
     align-items: center;
+    margin-right: auto;
 }
 
 .header-nav a {
@@ -93,6 +105,7 @@ a {
 
 .profile-picture {
     margin-right: 10px;
+    height: 19px;
     grid-row: span 2;
     display: flex;
     align-items: center;
@@ -138,7 +151,8 @@ a {
     background-color: white;
 }
 
-form .white-btn {
+form .white-btn, 
+form .yellow-btn {
     margin-left: 0;
 }
 
@@ -148,18 +162,13 @@ ul {
     font-size: .8rem;
 }
 
-.help-text {
-    font-size: .8rem;
-    opacity: 70%;
+.login-error {
+    font-size: .9rem;
+    opacity: 60%;
 }
 
 li::marker {
     color: red;
-}
-
-.names-wrapper {
-    display: flex;
-    gap: 1rem;
 }
 
 .names-wrapper div {
@@ -170,31 +179,14 @@ label {
     font-size: .8rem;
 }
 
-input,
-form .yellow-btn {
-    margin-top: .6rem;
-}
-
 input[type=password],
 input[type=email],
 input[type=text] {
-    width: 100%;
     padding: .3rem;
 }
 
 .proportion-40 {
     width: 40%;
-}
-
-.login-bottom {
-    margin-top: 0.6rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.login-bottom a {
-    font-size: .8rem;
 }
 
 .reset-password-email {

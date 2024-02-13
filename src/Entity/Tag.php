@@ -6,10 +6,12 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'This tag already exists')]
 class Tag
 {
     #[ORM\Id]
@@ -108,7 +110,9 @@ class Tag
 
     public function circularReferenceSafe(): Tag 
     {
-        $this->userId = $this->user->getId();
+        if ($this->user){
+            $this->userId = $this->user->getId();
+        }
         $this->entries->map(function ($entry) {return $entry->circularReferenceSafe(); });
 
         return $this;

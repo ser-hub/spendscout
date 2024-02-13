@@ -4,6 +4,10 @@
 	Log in
 {% endblock %}
 
+{% block stylesheets %}
+	<link href="{{ asset('styles/login.css') }}" rel="stylesheet" data-turbo-track="reload">
+{% endblock %}
+
 {% block page_content %}
 	<div class="layout-horizontal space-evenly">
 		<div class="caption proportion-40">Smart spending, smarter saving. Login now.</div>

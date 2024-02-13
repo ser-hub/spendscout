@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 class APIController extends AbstractController
 {
     private const OBJECT_NOT_FOUND_MESSAGE = 'Object not found.';
+    private const ACCESS_TO_RESOURCE_DENIED_MESSAGE = 'This resource belongs to another user.';
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -49,6 +50,19 @@ class APIController extends AbstractController
         return $this->json($this->getUser()->getEntriesCircularReferenceSafe());
     }
 
+    #[Route('/entries/{id<\d+>}', name: 'get_entry', methods: ['GET'])]
+    public function getEntry(?Entry $entry): JsonResponse
+    {
+        if (!$entry) {
+            return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
+        } 
+        if ($entry->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json(self::ACCESS_TO_RESOURCE_DENIED_MESSAGE, 403);
+        }
+
+        return $this->json($entry->circularReferenceSafe());
+    }
+
     #[Route('/entries', name: 'add_entry', methods: ['POST'], format: 'json')]
     public function addEntry(#[MapRequestPayload(acceptFormat: 'json')] Entry $entry): JsonResponse
     {
@@ -70,6 +84,9 @@ class APIController extends AbstractController
         if (!$entry) {
             return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
+        if ($entry->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json(self::ACCESS_TO_RESOURCE_DENIED_MESSAGE, 403);
+        }
 
         // get the objects for the specific IDs
         $currency = $this->entityManager->getRepository(Currency::class)->find($entryDTO->getCurrencyId());
@@ -88,10 +105,13 @@ class APIController extends AbstractController
     }
 
     #[Route('/entries/{id<\d+>}', name: 'delete_entry', methods: ['DELETE'])]
-    public function deleteEntry($entry): JsonResponse
+    public function deleteEntry(?Entry $entry): JsonResponse
     {
         if (!$entry) {
             return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+        if ($entry->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json(self::ACCESS_TO_RESOURCE_DENIED_MESSAGE, 403);
         }
 
         $this->entityManager->remove($entry);
@@ -111,6 +131,9 @@ class APIController extends AbstractController
     {
         if (!$tag) {
             return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+        if ($tag->getUser() && $tag->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json(self::ACCESS_TO_RESOURCE_DENIED_MESSAGE, 403);
         }
 
         return $this->json($tag);
@@ -132,6 +155,9 @@ class APIController extends AbstractController
         if (!$tag) {
             return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
         }
+        if ($tag->getUser() && $tag->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json(self::ACCESS_TO_RESOURCE_DENIED_MESSAGE, 403);
+        }
 
         $tag->setName($tagDTO->getName());
         $this->entityManager->flush();
@@ -144,6 +170,9 @@ class APIController extends AbstractController
     {
         if (!$tag) {
             return $this->json(self::OBJECT_NOT_FOUND_MESSAGE, 404);
+        }
+        if ($tag->getUser() && $tag->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json(self::ACCESS_TO_RESOURCE_DENIED_MESSAGE, 403);
         }
 
         $this->entityManager->remove($tag);

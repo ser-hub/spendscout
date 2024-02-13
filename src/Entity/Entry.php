@@ -144,8 +144,8 @@ class Entry
     public function circularReferenceSafe(): Entry
     {
         $this->userId = $this->user->getId();
-        $this->tagId = $this->tag->getId();
-        $this->currencyId = $this->currency->getId();
+        $this->tagId = $this->tag->getName();
+        $this->currencyId = $this->currency->getCode();
 
         return $this;
     }

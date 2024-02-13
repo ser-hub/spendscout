@@ -66,4 +66,11 @@ class Currency
 
         return $this;
     }
+
+    public function clearEntries(): static 
+    {
+        $this->entries->clear();
+
+        return $this;
+    }
 }

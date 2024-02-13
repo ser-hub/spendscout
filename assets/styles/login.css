@@ -1,0 +1,14 @@
+.login-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-bottom a {
+    font-size: .8rem;
+    margin-left: 5rem;
+}
+
+.layout-horizontal {
+    padding: 12.5rem 0;
+}
