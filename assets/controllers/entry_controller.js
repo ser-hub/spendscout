@@ -478,7 +478,7 @@ export default class extends Controller {
 
         const entryDate = document.createElement('div');
         entryDate.classList.add("entry-date");
-        entryDate.textContent = entry.date.split('T')[0];
+        entryDate.textContent = new Date(entry.date.split('T')[0]).toLocaleDateString(userLocale);
 
         const editBtn = document.createElement('i');
         editBtn.classList.add('fa-solid');
