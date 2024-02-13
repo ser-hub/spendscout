@@ -1,3 +1,4 @@
+![Logo](https://github.com/ser-hub/spendscout-docs/blob/main/logo-final-2.png)
 # SpendScout
 
 An application that helps you manage and track your expenses efficiently.
@@ -6,11 +7,11 @@ An application that helps you manage and track your expenses efficiently.
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Tech Stack](#techStack)
+- [Tech Stack](#tech-stack)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Color Refence](#colorReference)
+- [Color Reference](#color-reference)
 
 ## Introduction
 
