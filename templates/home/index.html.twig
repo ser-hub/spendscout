@@ -10,7 +10,6 @@
 {% block page_content %}
 	<div class="middle layout-horizontal" data-controller="entry">
 		<div class="entry-box-wrapper">
-			<div class="status" data-entry-target="statusText"></div>
 			<div class="entry-grid">
 				<div class="entries" data-entry-target="entriesGrid" data-loader-url-value="/api/entries">
 					<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
@@ -29,6 +28,7 @@
 			<div class="edit-mode" data-entry-target="entryFormStatus">Editing entry
 				<i class="fa-solid fa-x" data-action="click->entry#clearEntryForm"></i>
 			</div>
+			<div class="status" data-entry-target="generalError"></div>
 			<form class="entry-form" onsubmit="event.preventDefault()">
 				<span class="entry-form-radios">
 					<div class="radio-wrapper">

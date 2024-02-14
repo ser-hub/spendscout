@@ -3,7 +3,6 @@ import * as api from './../api.js'
 
 export default class extends Controller {
     static targets = [
-        "statusText",
         "entryFormStatus",
         "entriesGrid",
         "entry",
@@ -24,7 +23,8 @@ export default class extends Controller {
         "entryFormAmount",
         "entryFormCurrency",
         "entryFormDate",
-        "entryEditBtn"
+        "entryEditBtn",
+        "generalError"
     ]
 
     entriesState = this.refreshEntries;
@@ -40,15 +40,18 @@ export default class extends Controller {
     }
 
     displayEntries(entries, scrollToId) {
+        this.generalErrorTarget.innerHTML = "";
+
         if (entries.length > 0) {
             this.entriesGridTarget.innerHTML = "";
             this.entriesGridTarget.parentNode.style.alignItems = "baseline";
+            this.entryControlsTarget.style.display = 'flex';
+            this.entriesGridTarget.style.overflowY = 'auto';
+
             entries.forEach((entry) => {
                 this.entriesGridTarget.appendChild(this.createEntryElement(entry));
             })
 
-            this.entryControlsTarget.style.display = 'flex';
-            this.entriesGridTarget.style.overflowY = 'auto';
             if (scrollToId == undefined || scrollToId < 0) {
                 this.entriesGridTarget.scrollTo(0, this.entriesGridTarget.scrollHeight);
             } else {
@@ -60,7 +63,9 @@ export default class extends Controller {
                 });
             }
         } else {
+            this.entriesGridTarget.parentNode.style.alignItems = "stretch";
             this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
+            this.entryControlsTarget.style.display = "none";
             this.entriesGridTarget.innerHTML = "No entries to show";
         }
     }
@@ -142,12 +147,15 @@ export default class extends Controller {
 
     async deleteEntry(event) {
         const id = event.currentTarget.parentNode.dataset.id;
-        const delMessage = await api.del(this.endpoint + '/' + id).then((result) => {
+        const response = await api.del(this.endpoint + '/' + id).then((result) => {
             return result;
         })
 
-        this.statusTextTarget.textContent = delMessage;
-        this.refreshEntries();
+        if (response.status && response.status != 200) {
+            this.displayGeneralError();
+        } else {
+            this.refreshEntries();
+        }
     }
 
     clearEntryForm() {
@@ -478,7 +486,7 @@ export default class extends Controller {
 
         const entryDate = document.createElement('div');
         entryDate.classList.add("entry-date");
-        entryDate.textContent = new Date(entry.date.split('T')[0]).toLocaleDateString(userLocale);
+        entryDate.textContent = entry.date.split('T')[0];
 
         const editBtn = document.createElement('i');
         editBtn.classList.add('fa-solid');
@@ -529,6 +537,6 @@ export default class extends Controller {
     }
 
     displayGeneralError() {
-        this.entryFormErrorTargets[0].textContent = "Something went wrong";
+        this.generalErrorTarget.innerHTML = "Something went wrong.";
     }
 }
