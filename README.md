@@ -50,18 +50,14 @@ git clone
 3. Install dependencies:
 ```bash
 composer install
-```
 symfony console importmap:install
+```
 
 4. Set up your environment variables by copying the `.env` file and update `.env.local` with your database credentials and other configuration options.
 5. Create the database schema and populate it with some data:
 ```bash
 symfony console doctrine:database:create
-```
-```bash
 symfony console doctrine:migrations:migrate
-```
-```bash
 symfony console doctrine:fixtures:load
 ```
 6. Install certificate authority for the local server:
@@ -75,8 +71,15 @@ symfony server:start
 ## Usage
 
 1. Register a new account and log in.
-2. Add your expenses, specifying the name, tag, amount, currency and date.
-3. Explore different features such as reports and tags to manage your expenses effectively.
+3. Add your expenses, specifying the name, tag, amount, currency and date.
+4. Explore different features such as reports and tags to manage your expenses effectively.
+
+  - Test accounts:
+
+      email: test1testov@email.com, test2testov@email.com, test3testov@email.com
+    
+      password: 123456tT* (all accounts have the same password)
+    
 
 ## Color Reference
 
