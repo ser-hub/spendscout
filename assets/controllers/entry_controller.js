@@ -36,7 +36,14 @@ export default class extends Controller {
     }
 
     async getEntries() {
-        return await api.get(this.endpoint);
+        return await api.get(this.endpoint).then((result) => {
+            if (result.length == 0) {
+                this.entryControlsTarget.style.display = 'none';
+                this.entriesGridTarget.innerHTML = "No entries to show";
+            }
+
+            return result;
+        });
     }
 
     displayEntries(entries, scrollToId) {
@@ -44,7 +51,7 @@ export default class extends Controller {
 
         if (entries.length > 0) {
             this.entriesGridTarget.innerHTML = "";
-            this.entriesGridTarget.parentNode.style.alignItems = "baseline";
+            this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
             this.entryControlsTarget.style.display = 'flex';
             this.entriesGridTarget.style.overflowY = 'auto';
 
@@ -63,9 +70,6 @@ export default class extends Controller {
                 });
             }
         } else {
-            this.entriesGridTarget.parentNode.style.alignItems = "stretch";
-            this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
-            this.entryControlsTarget.style.display = "none";
             this.entriesGridTarget.innerHTML = "No entries to show";
         }
     }
@@ -89,7 +93,6 @@ export default class extends Controller {
             this.displayGeneralError();
         } else {
             const newEntry = this.createEntryElement(response);
-            this.entriesGridTarget.appendChild(newEntry);
             this.entriesState(newEntry.dataset.id, true);
             this.clearEntryForm();
         }
@@ -154,7 +157,7 @@ export default class extends Controller {
         if (response.status && response.status != 200) {
             this.displayGeneralError();
         } else {
-            this.refreshEntries();
+            this.entriesState();
         }
     }
 
@@ -436,7 +439,14 @@ export default class extends Controller {
             const data = await this.getEntries();
             this.entriesState = this.filterByDate;
 
-            this.displayEntries(data.filter((entry) => entry.date >= dateFrom && entry.date <= dateTo), scrollToId)
+            const filteredData = data.filter((entry) => entry.date >= dateFrom && entry.date <= dateTo);
+            this.displayEntries(filteredData, scrollToId);
+
+            const mappedData = filteredData.map((data) => data.id);
+
+            if (!(scrollToId instanceof Event) && !mappedData.includes(parseInt(scrollToId))) {
+                this.generalErrorTarget.innerHTML = "Entry added.";
+            }
         }
     }
 
@@ -447,8 +457,14 @@ export default class extends Controller {
         const data = await this.getEntries();
         this.entriesState = this.filterByTag;
 
-        console.log(tagName)
-        this.displayEntries(data.filter((entry) => entry.tagId == tagName), scrollToId)
+        const filteredData = data.filter((entry) => entry.tagId == tagName);
+        this.displayEntries(filteredData, scrollToId);
+
+        const mappedData = filteredData.map((data) => data.id);
+
+        if (!(scrollToId instanceof Event) && !mappedData.includes(parseInt(scrollToId))) {
+            this.generalErrorTarget.innerHTML = "Entry added.";
+        }
     }
 
     createEntryElement(entry) {
