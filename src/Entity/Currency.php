@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\CurrencyRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
+#[UniqueEntity(fields: ['code'], message: 'This currency already exists.')]
 class Currency
 {
     #[ORM\Id]
