@@ -75,8 +75,15 @@ symfony server:start
 ## Usage
 
 1. Register a new account and log in.
-2. Add your expenses, specifying the name, tag, amount, currency and date.
-3. Explore different features such as reports and tags to manage your expenses effectively.
+3. Add your expenses, specifying the name, tag, amount, currency and date.
+4. Explore different features such as reports and tags to manage your expenses effectively.
+
+  - Test accounts:
+
+      email: test1testov@email.com, test2testov@email.com, test3testov@email.com
+    
+      password: 123456tT* (all accounts have the same password)
+    
 
 ## Color Reference
 
