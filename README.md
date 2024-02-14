@@ -50,18 +50,14 @@ git clone
 3. Install dependencies:
 ```bash
 composer install
-```
 symfony console importmap:install
+```
 
 4. Set up your environment variables by copying the `.env` file and update `.env.local` with your database credentials and other configuration options.
 5. Create the database schema and populate it with some data:
 ```bash
 symfony console doctrine:database:create
-```
-```bash
 symfony console doctrine:migrations:migrate
-```
-```bash
 symfony console doctrine:fixtures:load
 ```
 6. Install certificate authority for the local server:
