@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import * as api from './../api.js'
+import * as api from './../api.js';
 
 export default class extends Controller {
     static targets = [
@@ -28,7 +28,7 @@ export default class extends Controller {
     ]
 
     entriesState = this.refreshEntries;
-    endpoint = '/api/entries';
+    endpoint = '/home/entries';
 
     connect() {
         this.entriesState();
