@@ -21,6 +21,41 @@ class EntryRepository extends ServiceEntityRepository
         parent::__construct($registry, Entry::class);
     }
 
+    /**
+     * @return Entry[] Returns an array of Entry objects
+    */
+    public function findByFilters($userId, $currencyId, $tagId, $dateFrom, $dateTo): array
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        if ($userId != null) {
+            $qb->andWhere('e.user = :userId');
+            $qb->setParameter('userId', $userId);
+        }
+
+        if ($currencyId != null) {
+            $qb->andWhere('e.currency = :currencyId');
+            $qb->setParameter('currencyId', $currencyId);
+        }
+
+        if ($tagId != null) {
+            $qb->andWhere('e.tag = :tagId');
+            $qb->setParameter('tagId', $tagId);
+        }
+
+        if ($dateFrom != null) {
+            $qb->andWhere('e.date >= :dateFrom');
+            $qb->setParameter('dateFrom', $dateFrom);
+        }
+
+        if ($dateTo != null) {
+            $qb->andWhere('e.date <= :dateTo');
+            $qb->setParameter('dateTo', $dateTo);
+        }
+
+        return $qb->getQuery()->execute();
+    }
+
 //    /**
 //     * @return Entry[] Returns an array of Entry objects
 //     */

@@ -1,0 +1,45 @@
+.layout-horizontal {
+    gap: 4rem;
+    padding: 3rem 0;
+    justify-content: center;
+}
+
+.chart-border {
+    min-height: 79%;
+    min-width: 88%;
+    position: absolute;
+    top: 92px;
+    margin-left: 21px;
+    border: 1px solid black;
+    border-radius: 9999px;
+    z-index: -1;
+}
+
+.chart-title {
+    text-align: center;
+}
+
+.pie {
+    position: relative;
+    min-width: 30vw;
+}
+
+.controls {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls button {
+    margin-left: 0;
+    margin-top: 1rem;
+}
+
+select,
+input {
+    padding: .3rem;
+    width: 100%;
+}

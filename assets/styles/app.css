@@ -55,6 +55,7 @@ a {
 }
 
 .layout-horizontal {
+    min-height: 84vh;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -101,6 +102,7 @@ a {
 .trademark {
     margin-left: auto;
     display: grid;
+    align-items: center;
 }
 
 .profile-picture {
@@ -110,13 +112,18 @@ a {
     display: flex;
     align-items: center;
     border-radius: 99px;
-    padding: 8px;
+    padding: 10px;
 }
 
 .user-controls a,
 .username {
     font-size: .9rem;
 }
+
+.username {
+    padding-top: 3px;
+}
+
 
 .user-controls a {
     grid-column: 2;
