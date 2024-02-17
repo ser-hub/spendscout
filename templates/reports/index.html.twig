@@ -1,20 +1,57 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Hello ReportsController!{% endblock %}
+{% block title %}Reports
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('styles/reports.css') }}" rel="stylesheet" data-turbo-track="reload">
+{% endblock %}
 
 {% block page_content %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello Reports! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/VICTUS/Desktop/spendscout/src/Controller/ReportsController.php'|file_link(0) }}">src/Controller/ReportsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/VICTUS/Desktop/spendscout/templates/reports/index.html.twig'|file_link(0) }}">templates/reports/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="layout-horizontal" data-controller="report">
+		<div class="pie">
+			<h3 class="chart-title" data-report-target="reportChartTitle">[{{ set_currency }}] Statistics</h3>
+			{{ render_chart(pie_chart, {
+				'data-report-target': 'reportChart',
+				'id': 'report-chart'
+				}) }}
+			<div class="chart-border" data-report-target="chartBorder"></div>
+		</div>
+		<div class="controls">
+			<u>
+				<b>Currency</b>
+			</u>
+			<select name="currencies" id="currencies" data-report-target="reportFormCurrency"  style="margin-bottom:1rem">
+				{% for currency in currencies %}
+					<option value="{{ currency.id }}" id="{{ currency.code }}" {% if currency.code == set_currency %}selected{% endif %}>
+						{{ currency.code|currency_symbol('bg') }}
+						({{ currency.code }})
+					</option>
+				{% endfor %}
+			</select>
+			<u>
+				<b>Tag</b>
+			</u>
+			<select name="tags" id="tags" data-report-target="reportFormTag" style="margin-bottom:1rem" value="{{ set_currency }}">
+				<option value="">Select tag</option>
+				{% for tag in user_tags %}
+					<option value="{{ tag.id }}" id="{{ tag.name }}">
+						{{ tag.name }}
+					</option>
+				{% endfor %}
+				{% for tag in default_tags %}
+					<option value="{{ tag.id }}" id="{{ tag.name }}">
+						{{ tag.name }}
+					</option>
+				{% endfor %}
+			</select>
+			<u>
+				<b>Date</b>
+			</u>
+			<input type="date" id="report-date-from" name="report-date-from" data-report-target="reportFormDateFrom"/>
+			to
+			<input type="date" id="report-date-from" name="report-date-to" data-report-target="reportFormDateTo"/>
+			<button class="yellow-btn" data-action="report#applyFilters">Apply</button>
+		</div>
+	</div>
 {% endblock %}
