@@ -39,7 +39,11 @@ export default class extends Controller {
         return await api.get(this.endpoint).then((result) => {
             if (result.length == 0) {
                 this.entryControlsTarget.style.display = 'none';
+                this.entriesGridTarget.parentNode.style.alignItems = "center";
+                this.entriesGridTarget.parentNode.style.justifyContent = "center";
                 this.entriesGridTarget.innerHTML = "No entries to show";
+            } else {
+                this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
             }
 
             return result;
