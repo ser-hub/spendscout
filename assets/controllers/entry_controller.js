@@ -51,6 +51,7 @@ export default class extends Controller {
 
         if (entries.length > 0) {
             this.entriesGridTarget.innerHTML = "";
+            this.entriesGridTarget.parentNode.style.alignItems = "flex-start";
             this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
             this.entryControlsTarget.style.display = 'flex';
             this.entriesGridTarget.style.overflowY = 'auto';
@@ -70,6 +71,7 @@ export default class extends Controller {
                 });
             }
         } else {
+            this.entriesGridTarget.parentNode.style.alignItems = "center";
             this.entriesGridTarget.innerHTML = "No entries to show";
         }
     }
