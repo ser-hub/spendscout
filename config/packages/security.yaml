@@ -17,7 +17,7 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                default_target_path: app_home
+                default_target_path: app_home_index
                 always_use_default_target_path: true
                 login_path: app_login
                 check_path: app_login
@@ -40,14 +40,9 @@ security:
     access_control:
         #admin
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/api/users/\d+$, roles: ROLE_ADMIN }
 
         #user
-        - { path: ^/$, roles: ROLE_USER }
-        - { path: ^/reports|profile|my-tags, roles: ROLE_USER }
-        - { path: ^/api/entries, roles: ROLE_USER }
-        - { path: ^/api/tags, roles: ROLE_USER }
-        - { path: ^/api/currencies, roles: ROLE_USER }
+        - { path: ^/home|reports|profile|my-tags, roles: ROLE_USER }
 
 when@test:
     security:
