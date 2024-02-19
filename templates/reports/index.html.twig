@@ -1,8 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Reports
-{% endblock %}
-
 {% block stylesheets %}
 	<link href="{{ asset('styles/reports.css') }}" rel="stylesheet" data-turbo-track="reload">
 {% endblock %}
@@ -15,15 +12,17 @@
 				'data-report-target': 'reportChart',
 				'id': 'report-chart'
 				}) }}
-			<div class="chart-border" data-report-target="chartBorder"></div>
+			{% if isEntriesEmpty == false %}
+				<div class="chart-border" data-report-target="chartBorder"></div>
+			{% endif %}
 		</div>
 		<div class="controls">
 			<u>
 				<b>Currency</b>
 			</u>
-			<select name="currencies" id="currencies" data-report-target="reportFormCurrency"  style="margin-bottom:1rem">
+			<select name="currencies" id="currencies" data-report-target="reportFormCurrency" style="margin-bottom:1rem">
 				{% for currency in currencies %}
-					<option value="{{ currency.id }}" id="{{ currency.code }}" {% if currency.code == set_currency %}selected{% endif %}>
+					<option value="{{ currency.id }}" id="{{ currency.code }}" {% if currency.code == set_currency %} selected {% endif %}>
 						{{ currency.code|currency_symbol('bg') }}
 						({{ currency.code }})
 					</option>

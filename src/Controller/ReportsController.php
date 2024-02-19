@@ -32,7 +32,9 @@ class ReportsController extends AbstractController
         $chart = $chartBuilder->createChart(Chart::TYPE_PIE);
 
         $userEntries = $this->getUser()->getEntries();
+        $allCurrencies = $entityManager->getRepository(Currency::class)->findAll();
 
+        $currency = null;
         if (!$userEntries->isEmpty()) {
             $expenses = $this->entryCalculator::calculateExpenses($userEntries);
             $income = $this->entryCalculator::calculateIncome($userEntries);
@@ -65,14 +67,30 @@ class ReportsController extends AbstractController
                     ],
                 ],
             ]);
+        } else {
+            $chart->setData([
+                'labels' => ['No data'],
+                'datasets' => [
+                    [
+                        'label' => 'No data',
+                        'backgroundColor' => ['#E6C715A0', '#E6C71540'],
+                        'borderColor' => 'transparent',
+                        'hoverBorderColor' => 'black',
+                        'data' => [0],
+                    ],
+                ],
+            ]);
+
+            $currency = $allCurrencies[0]->getCode();
         }
 
         return [
             'user_tags' => $this->getUser()->getTags(),
             'default_tags' => $entityManager->getRepository(Tag::class)->findDefaultTags(),
             'pie_chart' => $chart,
-            'currencies' => $entityManager->getRepository(Currency::class)->findAll(),
+            'currencies' => $allCurrencies,
             'set_currency' => $currency,
+            'isEntriesEmpty' => $userEntries->isEmpty(),
         ];
     }
 

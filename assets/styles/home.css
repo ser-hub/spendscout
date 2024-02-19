@@ -195,10 +195,6 @@ input[type=radio],
     opacity: 60%;
 }
 
-.layout-horizontal {
-    padding: 3.1rem 0;
-}
-
 .new-animate {
     animation: new-animation 500ms 5 linear;
 }
