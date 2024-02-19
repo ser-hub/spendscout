@@ -36,6 +36,7 @@ class Entry
     #[ORM\JoinColumn(nullable: false)]
     private ?Tag $tag = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column]
     private ?float $amount = null;
 

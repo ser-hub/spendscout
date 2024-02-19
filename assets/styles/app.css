@@ -201,3 +201,29 @@ input[type=text] {
 .reset-password-email {
     margin-bottom: .3rem;
 }
+
+.select {
+    border-style: dashed;
+    background-color: var(--gray);
+}
+
+.new-animate {
+    animation: new-animation 500ms 5 linear;
+}
+
+@keyframes new-animation {
+    0% {
+        border-style: solid;
+        background-color: white;
+    }
+
+    50% {
+        border-style: dashed;
+        background-color: var(--gray);
+    }
+
+    100% {
+        border-style: solid;
+        background-color: white;
+    }
+}

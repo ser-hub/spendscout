@@ -19,20 +19,20 @@ use Symfony\UX\Chartjs\Model\Chart;
 class ReportsController extends AbstractController
 {
     public function __construct(
-        private EntryCalculator $entryCalculator
+        private EntryCalculator $entryCalculator,
+        private EntityManagerInterface $entityManager
     ) {
     }
 
     #[Route('', name: '_index')]
     #[Template('reports/index.html.twig')]
     public function index(
-        EntityManagerInterface $entityManager,
         ChartBuilderInterface $chartBuilder,
     ): array {
         $chart = $chartBuilder->createChart(Chart::TYPE_PIE);
 
         $userEntries = $this->getUser()->getEntries();
-        $allCurrencies = $entityManager->getRepository(Currency::class)->findAll();
+        $allCurrencies = $this->entityManager->getRepository(Currency::class)->findAll();
 
         $currency = null;
         if (!$userEntries->isEmpty()) {
@@ -86,7 +86,7 @@ class ReportsController extends AbstractController
 
         return [
             'user_tags' => $this->getUser()->getTags(),
-            'default_tags' => $entityManager->getRepository(Tag::class)->findDefaultTags(),
+            'default_tags' => $this->entityManager->getRepository(Tag::class)->findDefaultTags(),
             'pie_chart' => $chart,
             'currencies' => $allCurrencies,
             'set_currency' => $currency,
@@ -100,18 +100,17 @@ class ReportsController extends AbstractController
         #[MapQueryParameter] int $tagId = null,
         #[MapQueryParameter] string $dateFrom = null,
         #[MapQueryParameter] string $dateTo = null,
-        EntityManagerInterface $entityManager
     ): JsonResponse {
 
         if ($currencyId != null) {
-            $entries = $entityManager->getRepository(Entry::class)->findByFilters(
+            $entries = $this->entityManager->getRepository(Entry::class)->findByFilters(
                 $this->getUser()->getId(),
                 $currencyId,
                 $tagId,
                 $dateFrom,
                 $dateTo
             );
-            $currency = $entityManager->getRepository(Currency::class)->find($currencyId)->getCode();
+            $currency = $this->entityManager->getRepository(Currency::class)->find($currencyId)->getCode();
 
             if (!count($entries)) {
                 return $this->json('No data');

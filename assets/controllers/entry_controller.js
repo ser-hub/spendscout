@@ -40,12 +40,10 @@ export default class extends Controller {
             if (result.length == 0) {
                 this.entryControlsTarget.style.display = 'none';
                 this.entriesGridTarget.parentNode.style.alignItems = "center";
-                this.entriesGridTarget.parentNode.style.justifyContent = "center";
                 this.entriesGridTarget.innerHTML = "No entries to show";
-            } else {
-                this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
             }
 
+            this.entriesGridTarget.parentNode.style.justifyContent = "flex-end";
             return result;
         });
     }
@@ -98,8 +96,7 @@ export default class extends Controller {
         } else if (response.status && response.status != 422) {
             this.displayGeneralError();
         } else {
-            const newEntry = this.createEntryElement(response);
-            this.entriesState(newEntry.dataset.id, true);
+            this.entriesState(response.id, true);
             this.clearEntryForm();
         }
     }
@@ -131,7 +128,7 @@ export default class extends Controller {
             this.entryFormCurrencyTarget.value = this.entryFormCurrencyTarget.options.namedItem(entryToEdit.currencyId).value;
 
             this.entryEditBtnTarget.dataset.action = "entry#editEntry";
-            this.entryEditBtnTarget.dataset.targetId = entryElement.dataset.id;
+            this.entryEditBtnTarget.dataset.targetId = entryToEdit.id;
         }
     }
 

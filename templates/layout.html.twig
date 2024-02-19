@@ -11,7 +11,7 @@
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<nav class="header-nav">
 					<a href="{{ path('app_reports_index') }}">Reports</a>
-					<a href="{{ path('app_my_tags') }}">My tags</a>
+					<a href="{{ path('app_my_tags_index') }}">My tags</a>
 					{% if is_granted('ROLE_ADMIN') %}
 						<a href="{{ path('app_admin') }}">Admin panel</a>
 					{% endif %}

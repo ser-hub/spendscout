@@ -14,7 +14,7 @@
 
 .entry-grid {
     padding: 1rem .5rem .5rem 1rem;
-    max-width: 70vw;
+    max-width: 50vw;
     min-height: 67vh;
     min-width: 32vw;
     display: flex;
@@ -62,9 +62,9 @@
     animation: loading_animation 2s infinite linear;
 }
 
-.middle {
+.layout-horizontal {
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .entry-form-wrapper {
@@ -175,11 +175,6 @@ input[type=radio],
     text-decoration: underline;
 }
 
-.select {
-    border-style: dashed;
-    background-color: var(--gray);
-}
-
 .edit-mode {
     display: none;
     border: 1px gray solid;
@@ -195,10 +190,6 @@ input[type=radio],
     opacity: 60%;
 }
 
-.new-animate {
-    animation: new-animation 500ms 5 linear;
-}
-
 @keyframes loading_animation {
     0% {
         transform: scale(1);
@@ -210,22 +201,5 @@ input[type=radio],
 
     100% {
         transform: scale(1);
-    }
-}
-
-@keyframes new-animation {
-    0% {
-        border-style: solid;
-        background-color: white;
-    }
-
-    50% {
-        border-style: dashed;
-        background-color: var(--gray);
-    }
-
-    100% {
-        border-style: solid;
-        background-color: white;
     }
 }
