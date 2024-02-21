@@ -15,7 +15,7 @@ class LoginController extends AbstractController
     {
         // redirect the user to app_home if they are authenticated
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_index');
         }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

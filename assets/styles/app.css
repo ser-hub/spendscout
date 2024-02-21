@@ -80,6 +80,7 @@ a {
 .logo-wrapper {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .logo-caption {
@@ -115,6 +116,9 @@ a {
     align-items: center;
     border-radius: 99px;
     padding: 10px;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 1px 1px 2px gray;
 }
 
 .user-controls a,
@@ -123,6 +127,7 @@ a {
 }
 
 .username {
+    cursor: pointer;
     padding-top: 3px;
 }
 
@@ -176,7 +181,7 @@ ul {
     opacity: 60%;
 }
 
-li::marker {
+.border-form-wrapper li::marker {
     color: red;
 }
 

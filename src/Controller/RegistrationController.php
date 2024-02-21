@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
         EntityManagerInterface $entityManager
     ) {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_index');
         }
 
         $user = new User();
@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('serkanbi.15@gmail.com', 'SpendScout Mail Bot'))
+                    ->from(new Address('spendscount.noreply@spendscout.com', 'SpendScout Mail Bot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')

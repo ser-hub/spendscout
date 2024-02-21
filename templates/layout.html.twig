@@ -4,7 +4,7 @@
 
 	{% block page_header %}
 		<div class="page-header">
-			<div class="logo-wrapper">
+			<div class="logo-wrapper" onclick="window.location.replace('{{ path('app_home_index') }}')">
 				<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
 				<span class="logo-caption">SpendScout</span>
 			</div>
@@ -20,11 +20,13 @@
 					<div class="profile-picture" style="background-color:rgb(
 							{{ randomRGBFromString(app.user.firstName) }},
 							{{ randomRGBFromString(app.user.lastName) }},
-							{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }})">
+							{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }})"
+							onclick="window.location.replace('{{ path('app_profile_index')}}')">
 						{{ app.user.firstName|first|upper }}{{ app.user.lastName|first|upper }}
 					</div>
-					<span class="username">{{ app.user.firstName }}
-						{{ app.user.lastName }}</span>
+					<span class="username"
+							onclick="window.location.replace('{{ path('app_profile_index')}}')">
+							{{ app.user.firstName }} {{ app.user.lastName }}</span>
 					<a href="{{ logout_path() }}">Log out</a>
 				</div>
 			{% elseif app.request.pathInfo == '/login' %}
