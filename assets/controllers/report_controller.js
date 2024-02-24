@@ -62,8 +62,8 @@ export default class extends Controller {
             } else {
                 this.chartBorderTarget.style.display = 'block';
                 pie.data.labels = [
-                    'Income',
-                    'Expenses'
+                    'Expenses',
+                    'Income'
                 ]
                 pie.data.datasets[0].data = [
                     result.expenses,

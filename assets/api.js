@@ -8,16 +8,23 @@ async function request(method, url, data) {
 
   if (data !== undefined) {
     options.headers["Content-Type"] = "application/json";
+    //data.csrf = localStorage.getItem('csrf-token');
     options.body = JSON.stringify(data);
   }
 
   const response = await fetch(host + url, options);
 
   try {
-    return response.json();  
+    return await response.json().then((response) => {
+      /*if (response.csrfToken !== undefined) {
+        localStorage.setItem('csrf-token', response.csrfToken);
+      }*/
+
+      return response;
+    });  
   } catch (error) {
     return {
-      detail: "Something went wrong!"
+      detail: "Something went wrong"
     }
   }
 }

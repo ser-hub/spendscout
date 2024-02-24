@@ -22,7 +22,7 @@ export default class extends Controller {
 
         await api.post('/profile/edit', data).then((response) => {
             if (response.firstName != undefined) {
-                this.profileWrapperTarget.childNodes[3].textContent = '';
+                this.profileWrapperTarget.childNodes[3].textContent = 'Profile updated';
                 this.profileFormFirstNameTarget.value = response.firstName;
                 this.profileFormLastNameTarget.value = response.lastName;
                 this.profileFormEmailTarget.value = response.email;

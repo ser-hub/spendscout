@@ -28,7 +28,8 @@ export default class extends Controller {
     ]
 
     entriesState = this.refreshEntries;
-    endpoint = '/home/entries';
+    endpoint = '/entries';
+    adminMode = false;
 
     connect() {
         this.entriesState();
@@ -194,6 +195,13 @@ export default class extends Controller {
         this.entryFormDateTarget.value = date;
     }
 
+    clearControls() {
+        this.byTextTarget.innerHTML = "";
+        this.dateBtnTarget.innerHTML = "";
+        this.control2Target.innerHTML = "";
+        this.control3Target.innerHTML = "";
+    }
+
     selectExpense() {
         this.expenseLabelTarget.classList.toggle("underline");
         if (this.incomeLabelTarget.classList.contains('underline')) {
@@ -223,10 +231,7 @@ export default class extends Controller {
         }
 
         if (!this.sortBtnTarget.classList.contains('underline')) {
-            this.byTextTarget.innerHTML = "";
-            this.dateBtnTarget.innerHTML = "";
-            this.control2Target.innerHTML = "";
-            this.control3Target.innerHTML = "";
+            this.clearControls();
             this.entriesState = this.refreshEntries;
             this.entriesState();
         } else {
@@ -295,10 +300,7 @@ export default class extends Controller {
         }
 
         if (!this.filterBtnTarget.classList.contains('underline')) {
-            this.byTextTarget.innerHTML = "";
-            this.dateBtnTarget.innerHTML = "";
-            this.control2Target.innerHTML = "";
-            this.control3Target.innerHTML = "";
+            this.clearControls();
             this.entriesState = this.refreshEntries;
             this.entriesState();
         } else {
@@ -386,12 +388,20 @@ export default class extends Controller {
         };
 
         const amountSortFuncDesc = (objA, objB) => {
-            return !amountSortFuncAsc(objA, objB);
+            if (objA.amount < objB.amount) {
+                return -1;
+            } else if (objB.amount < objA.amount) {
+                return 1;
+            }
+
+            return 0;
         }
 
         if (sortMode == 'asc') {
+            console.log(data.sort(amountSortFuncAsc))
             this.displayEntries(data.sort(amountSortFuncAsc), scrollToId);
         } else {
+            console.log(data.sort(amountSortFuncDesc))
             this.displayEntries(data.sort(amountSortFuncDesc), scrollToId);
         }
 
@@ -418,15 +428,19 @@ export default class extends Controller {
         this.control3Target.classList.add('underline');
     }
 
-    filterByTagClick() {
+    async filterByTagClick() {
         this.control2Target.classList.toggle("underline");
         if (this.dateBtnTarget.classList.contains('underline')) {
             this.dateBtnTarget.classList.remove('underline');
         }
 
         const tagsElement = document.createElement('select');
-        Array.from(this.entryFormTagTarget.options).forEach((option) => {
-            tagsElement.add(new Option(option.textContent));
+        await api.get(this.endpoint.replace('entries', 'tags')).then((response) => {
+            if (response.length > 0) {
+                response.forEach((tag) => {
+                    tagsElement.add(new Option(tag.name));
+                })
+            }
         })
         tagsElement.dataset.action = "entry#filterByTag";
 
@@ -519,6 +533,11 @@ export default class extends Controller {
         deleteBtn.classList.add('fa-xl');
         deleteBtn.dataset.action = 'click->entry#deleteEntry';
 
+        if (this.adminMode) {
+            editBtn.style.display = 'none';
+            deleteBtn.style.display = 'none';
+        }
+
         entryWrapper.append(
             entryBtn,
             entryCurrency,
@@ -543,9 +562,7 @@ export default class extends Controller {
     }
 
     displayValidationErrors(detail) {
-        console.log(detail);
         const detailSplitted = detail.split(':');
-
         const field = detailSplitted[0].trim();
 
         if (field == 'name') {
@@ -557,5 +574,18 @@ export default class extends Controller {
 
     displayGeneralError() {
         this.generalErrorTarget.innerHTML = "Something went wrong.";
+    }
+
+    async adminLoadUserData(event) {
+        this.endpoint = '/admin/entries/' + event.currentTarget.dataset.id;
+        this.adminMode = true;
+        if (event.currentTarget.classList.contains('select-user')){
+            this.clearControls();
+            this.refreshEntries();
+        } else {
+            this.entryControlsTarget.style.display = 'none';
+            this.entriesGridTarget.parentNode.style.alignItems = "center";
+            this.entriesGridTarget.innerHTML = "No entries to show";
+        }
     }
 }
