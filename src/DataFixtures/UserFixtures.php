@@ -38,6 +38,13 @@ class UserFixtures extends Fixture
             }
         }
 
+        $manager->persist($this->createUser(
+            "Admino",
+            "Adminov",
+            "ssAdmin@email.com",
+            "ssAdmin123*"
+        ));
+
         $manager->flush();
     }
 

@@ -6,68 +6,7 @@
 
 {% block page_content %}
 	<div class="layout-horizontal" data-controller="entry">
-		<div class="entry-box-wrapper">
-			<div class="entry-grid">
-				<div class="entries" data-entry-target="entriesGrid" data-loader-url-value="/api/entries">
-					<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
-				</div>
-				<div class="entry-grid-controls" data-entry-target="entryControls">
-					<button class="entry-filter-btn" data-entry-target="filterBtn" data-action="entry#filterBtnClick">Filter</button>
-					<button class="entry-sort-btn" data-entry-target="sortBtn" data-action="entry#sortBtnClick">Sort</button>
-					<span class="underline" data-entry-target="byText"></span>
-					<button class="date-btn" data-entry-target="dateBtn"></button>
-					<button class="control-2" data-entry-target="control2"></button>
-					<div class="control-3" data-entry-target="control3"></div>
-				</div>
-			</div>
-		</div>
-		<div class="entry-form-wrapper">
-			<div class="edit-mode" data-entry-target="entryFormStatus">Editing entry
-				<i class="fa-solid fa-x" data-action="click->entry#clearEntryForm"></i>
-			</div>
-			<div class="status" data-entry-target="generalError"></div>
-			<form class="entry-form" onsubmit="event.preventDefault()">
-				<span class="entry-form-radios">
-					<div class="radio-wrapper">
-						<input type="radio" id="income" name="is_expense" required data-action="entry#selectIncome" data-entry-target="incomeRadio">
-						<label for="income" data-entry-target="incomeLabel" style="margin-top: 2px">I received money</label><br>
-					</div>
-					<div class="radio-wrapper">
-						<input type="radio" id="expense" name="is_expense" data-action="entry#selectExpense" data-entry-target="expenseRadio">
-						<label for="expense" data-entry-target="expenseLabel" style="margin-top: 3px">I spent money</label>
-					</div>
-				</span>
-				<div>
-					<div class="form-error" data-entry-target="entryFormError"></div>
-					<input type="text" id="name" name="_name" placeholder="From/On" data-entry-target="entryFormName">
-				</div>
-				<select name="tags" id="tags" data-entry-target="entryFormTag">
-					{% for tag in user_tags %}
-						<option value="{{ tag.id }}" id="{{ tag.name }}">
-							{{ tag.name }}
-						</option>
-					{% endfor %}
-					{% for tag in default_tags %}
-						<option value="{{ tag.id }}" id="{{ tag.name }}">
-							{{ tag.name }}
-						</option>
-					{% endfor %}
-				</select>
-				<div>
-					<div class="form-error" data-entry-target="entryFormError"></div>
-					<input type="text" id="amount" name="_amount" placeholder="Amount" title="Format: .99" data-entry-target="entryFormAmount">
-				</div>
-				<select name="currencies" id="currencies" data-entry-target="entryFormCurrency">
-					{% for currency in currencies %}
-						<option value="{{ currency.id }}" id="{{ currency.code }}">
-							{{ currency.code|currency_symbol('bg') }}
-							({{ currency.code }})
-						</option>
-					{% endfor %}
-				</select>
-				<input type="date" id="entry-date" name="entry-date" data-entry-target="entryFormDate"/>
-				<button type="submit" class="yellow-btn" data-action="entry#entryFormSubmit" data-entry-target="entryEditBtn">Save</button>
-			</form>
-		</div>
+		<twig:EntryGrid></twig:EntryGrid>
+		<twig:EntryForm></twig:EntryForm>
 	</div>
 {% endblock %}

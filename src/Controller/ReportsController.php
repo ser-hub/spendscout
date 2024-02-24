@@ -56,7 +56,7 @@ class ReportsController extends AbstractController
             }
 
             $chart->setData([
-                'labels' => ['Income', 'Expenses'],
+                'labels' => ['Expenses', 'Income'],
                 'datasets' => [
                     [
                         'label' => $currency,

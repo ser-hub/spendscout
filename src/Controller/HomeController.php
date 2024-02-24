@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Entry;
 use App\Entity\Tag;
 use App\Entity\Currency;
+use App\Entity\User;
 use App\Utilities\ErrorMessages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
-#[Route('/home', name: 'app_home')]
+#[Route('', name: 'app_home')]
 class HomeController extends AbstractController
 {
     public function __construct(
@@ -24,13 +25,13 @@ class HomeController extends AbstractController
 
     #[Route('', name: '_index')]
     #[Template('home/index.html.twig')]
-    public function index(EntityManagerInterface $entityManager)
+    public function index()
     {
         return [
-            'entries' => $entityManager->getRepository(Entry::class)->findAll(),
+            'entries' => $this->entityManager->getRepository(Entry::class)->findAll(),
             'user_tags' => $this->getUser()->getTags(),
-            'default_tags' => $entityManager->getRepository(Tag::class)->findDefaultTags(),
-            'currencies' => $entityManager->getRepository(Currency::class)->findAll(),
+            'default_tags' => $this->entityManager->getRepository(Tag::class)->findDefaultTags(),
+            'currencies' => $this->entityManager->getRepository(Currency::class)->findAll(),
         ];
     }
 
@@ -38,6 +39,13 @@ class HomeController extends AbstractController
     public function getAllUserEntries(): JsonResponse
     {
         return $this->json($this->getUser()->getEntriesCircularReferenceSafe());
+    }
+
+    #[Route('/tags', name: '_get_all_user_tags', methods: ['GET'])]
+    public function getAllUserTags(): JsonResponse
+    {
+        $tags = $this->entityManager->getRepository(Tag::class)->findTagNamesOfUser($this->getUser()->getId());
+        return $this->json($tags);
     }
 
     #[Route('/entries/{id<\d+>}', name: '_get_entry', methods: ['GET'])]

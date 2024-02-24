@@ -42,7 +42,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
 
         #user
-        - { path: ^/home|reports|profile|my-tags, roles: ROLE_USER }
+        - { path: ^/$, roles: ROLE_USER }
+        - { path: ^/reports|profile|my-tags, roles: ROLE_USER }
 
 when@test:
     security:

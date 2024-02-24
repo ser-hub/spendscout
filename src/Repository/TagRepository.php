@@ -35,6 +35,23 @@ class TagRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findTagNamesOfUser(int $id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT name FROM Tag t
+            WHERE t.user_id is null OR t.user_id = ?
+            ';
+
+        $statement = $conn->prepare($sql);
+        $statement->bindValue(1, $id);
+
+        $resultSet = $statement->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Tag[] Returns an array of Tag objects
 //     */

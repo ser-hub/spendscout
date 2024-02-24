@@ -8,3 +8,10 @@
     font-size: .8rem;
     margin-left: 5rem;
 }
+
+.flash-notice {
+    color: green;
+    opacity: 80%;
+    font-size: .9rem;
+    margin-top: .5rem;
+}
