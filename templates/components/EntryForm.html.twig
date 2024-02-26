@@ -3,14 +3,14 @@
 		<i class="fa-solid fa-x" data-action="click->entry#clearEntryForm"></i>
 	</div>
 	<div class="status" data-entry-target="generalError"></div>
-	<form class="entry-form" onsubmit="event.preventDefault()">
+	<form class="entry-form">
 		<span class="entry-form-radios">
 			<div class="radio-wrapper">
 				<input type="radio" id="income" name="is_expense" required data-action="entry#selectIncome" data-entry-target="incomeRadio">
 				<label for="income" data-entry-target="incomeLabel" style="margin-top: 2px">I received money</label><br>
 			</div>
 			<div class="radio-wrapper">
-				<input type="radio" id="expense" name="is_expense" data-action="entry#selectExpense" data-entry-target="expenseRadio">
+				<input type="radio" id="expense" name="is_expense" data-action="entry#selectExpense" data-entry-target="expenseRadio" required>
 				<label for="expense" data-entry-target="expenseLabel" style="margin-top: 3px">I spent money</label>
 			</div>
 		</span>
@@ -43,6 +43,6 @@
 			{% endfor %}
 		</select>
 		<input type="date" id="entry-date" name="entry-date" data-entry-target="entryFormDate"/>
-		<button type="submit" class="yellow-btn" data-action="entry#entryFormSubmit" data-entry-target="entryEditBtn">Save</button>
+		<button type="submit" class="yellow-btn" data-action="entry#entryFormSubmit:prevent" data-entry-target="entryEditBtn">Save</button>
 	</form>
 </div>

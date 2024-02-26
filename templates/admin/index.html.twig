@@ -6,21 +6,25 @@
 {% endblock %}
 
 {% block page_content %}
-	<div class="layout-horizontal" data-controller="admin entry" style="gap:1rem">
+	<div class="layout-horizontal" data-controller="admin entry" data-endpoint="" style="gap:1rem">
 		<div class="user-select-wrapper">
-		<div>
-			<input type="text" class="user-search" placeholder="Search users" data-admin-target="searchField" data-action="keypress->admin#keyPress">
-			<button class="custom-btn" data-action="admin#searchUsers">Search</button>
-		</div>
-			<div class="user-grid" data-admin-target="userGrid">
-				{% for user in users %}
-					<div class="user-wrapper" data-id="{{ user.id }}" data-action="click->admin#selectUser click->entry#adminLoadUserData">
-						<div class="username">{{ user.firstName }}
-							{{ user.lastName }}</div>
-						<div class="email">{{ user.email }}</div>
-					</div>
-				{% endfor %}
-			</div>
+			{% if users is not empty %}
+				<div>
+					<input type="text" class="user-search" placeholder="Search users" data-admin-target="searchField" data-action="keydown.enter->admin#searchUsers">
+					<button class="custom-btn" data-action="admin#searchUsers">Search</button>
+				</div>
+				<div class="user-grid" data-admin-target="userGrid">
+					{% for user in users %}
+						<div class="user-wrapper" data-id="{{ user.id }}" data-action="click->admin#selectUser click->entry#adminLoadUserData">
+							<div class="username">{{ user.firstName }}
+								{{ user.lastName }}</div>
+							<div class="email">{{ user.email }}</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				No users to show
+			{% endif %}
 		</div>
 		<twig:EntryGrid>
 			<div class="status" data-entry-target="generalError" style="display:none"></div>

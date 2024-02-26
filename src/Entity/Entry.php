@@ -21,6 +21,7 @@ class Entry
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[Assert\NotBlank]
     #[Assert\Length(
         max: 255,
         maxMessage: 'Name can not be longer than 255 characters.'

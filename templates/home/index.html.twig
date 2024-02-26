@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_content %}
-	<div class="layout-horizontal" data-controller="entry">
+	<div class="layout-horizontal" data-controller="entry" data-endpoint="{{ path('app_home_get_all_user_entries') }}">
 		<twig:EntryGrid></twig:EntryGrid>
 		<twig:EntryForm></twig:EntryForm>
 	</div>

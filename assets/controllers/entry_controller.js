@@ -28,10 +28,11 @@ export default class extends Controller {
     ]
 
     entriesState = this.refreshEntries;
-    endpoint = '/entries';
+    endpoint = null;
     adminMode = false;
 
     connect() {
+        this.endpoint = this.element.dataset.endpoint;
         this.entriesState();
         this.clearEntryForm();
     }
@@ -88,17 +89,21 @@ export default class extends Controller {
 
     async entryFormSubmit() {
         const entryData = this.getentryDataFromEntryForm();
-        let response = await api.post(this.endpoint, entryData).then((entry) => {
-            return entry;
-        });
+        if (entryData.name != undefined && entryData.name != '') {
+            const response = await api.post(this.endpoint, entryData).then((entry) => {
+                return entry;
+            });
 
-        if (response.title && response.title === "Validation Failed") {
-            this.displayValidationErrors(response.detail);
-        } else if (response.status && response.status != 422) {
-            this.displayGeneralError();
+            if (response.title && response.title === "Validation Failed") {
+                this.displayValidationErrors(response.detail);
+            } else if (response.status && response.status != 422) {
+                this.displayGeneralError();
+            } else {
+                this.entriesState(response.id, true);
+                this.clearEntryForm();
+            }
         } else {
-            this.entriesState(response.id, true);
-            this.clearEntryForm();
+            this.entryFormErrorTargets[0].textContent = 'This value should not be blank';
         }
     }
 
@@ -128,7 +133,7 @@ export default class extends Controller {
             this.entryFormTagTarget.value = this.entryFormTagTarget.options.namedItem(entryToEdit.tagId).value;
             this.entryFormCurrencyTarget.value = this.entryFormCurrencyTarget.options.namedItem(entryToEdit.currencyId).value;
 
-            this.entryEditBtnTarget.dataset.action = "entry#editEntry";
+            this.entryEditBtnTarget.dataset.action = "entry#editEntry:prevent";
             this.entryEditBtnTarget.dataset.targetId = entryToEdit.id;
         }
     }
@@ -551,6 +556,10 @@ export default class extends Controller {
     }
 
     getentryDataFromEntryForm() {
+        if (!this.expenseRadioTarget.checked && !this.incomeRadioTarget.checked) {
+            return false;
+        }
+
         return {
             isExpense: this.expenseRadioTarget.checked,
             name: this.entryFormNameTarget.value,
@@ -565,6 +574,9 @@ export default class extends Controller {
         const detailSplitted = detail.split(':');
         const field = detailSplitted[0].trim();
 
+        this.entryFormErrorTargets[0].textContent = "";
+        this.entryFormErrorTargets[1].textContent = "";
+
         if (field == 'name') {
             this.entryFormErrorTargets[0].textContent = "Too long";
         } else if (field == 'amount') {
@@ -577,15 +589,19 @@ export default class extends Controller {
     }
 
     async adminLoadUserData(event) {
-        this.endpoint = '/admin/entries/' + event.currentTarget.dataset.id;
-        this.adminMode = true;
-        if (event.currentTarget.classList.contains('select-user')){
-            this.clearControls();
-            this.refreshEntries();
-        } else {
-            this.entryControlsTarget.style.display = 'none';
-            this.entriesGridTarget.parentNode.style.alignItems = "center";
-            this.entriesGridTarget.innerHTML = "No entries to show";
+        if (!this.adminMode) {
+            this.adminMode = true;
+        }
+        if (event.currentTarget.dataset != undefined) {
+            this.endpoint = '/admin/entries/' + event.currentTarget.dataset.id;
+            if (event.currentTarget.classList.contains('select-user')) {
+                this.clearControls();
+                this.refreshEntries();
+            } else {
+                this.entryControlsTarget.style.display = 'none';
+                this.entriesGridTarget.parentNode.style.alignItems = "center";
+                this.entriesGridTarget.innerHTML = "No entries to show";
+            }
         }
     }
 }

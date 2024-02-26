@@ -8,18 +8,17 @@ export default class extends Controller {
         "entriesGrid"
     ];
 
-    selectUser(event) {
+    selectUser(event, target) {
         this.userGridTarget.childNodes.forEach(node => {
             if (node.nodeName == 'DIV' && node.classList.contains('select-user') && node != event.currentTarget) {
                 node.classList.remove('select-user');
             }
         });
-        event.currentTarget.classList.toggle('select-user');
-    }
 
-    keyPress(event) {
-        if (event.key == 'Enter') {
-            this.searchUsers();
+        if (target != undefined) {
+            target.classList.toggle('select-user');
+        } else {
+            event.currentTarget.classList.toggle('select-user');
         }
     }
 
