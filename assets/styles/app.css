@@ -54,6 +54,8 @@ a {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-top: 1rem;
+    display: flex;
+    align-items: flex-end;
 }
 
 .layout-horizontal {
@@ -140,10 +142,21 @@ a {
 
 .footer-links {
     width: 100%;
+    opacity: 80%;
+    font-size: .9rem;
+    font-weight: bold;
+    display: flex;
+    margin-left: 1rem;
+    gap: 1rem;
+}
+
+.footer-links a {
+    color: black;
 }
 
 .trademark {
     font-size: 9pt;
+    margin-bottom: 0.5rem;
 }
 
 .yellow-btn,

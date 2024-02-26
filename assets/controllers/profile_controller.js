@@ -28,7 +28,6 @@ export default class extends Controller {
                 this.profileFormEmailTarget.value = response.email;
             } else {
                 if (response.title === 'Validation Failed') {
-                    console.log(response)
                     this.profileWrapperTarget.childNodes[3].textContent = response.detail.split(':')[1].split('(')[0];
                 } else {
                     this.profileWrapperTarget.childNodes[3].textContent = response.detail;
@@ -90,9 +89,9 @@ export default class extends Controller {
                 this.profileWrapperTarget.childNodes[1].textContent = response;
             } else {
                 if (response.title === 'Validation Failed') {
-                    this.profileWrapperTarget.childNodes[3].textContent = response.detail.split(':')[1].split('(')[0];
+                    this.profileWrapperTarget.childNodes[1].textContent = response.detail;
                 } else {
-                    this.profileWrapperTarget.childNodes[3].textContent = response.detail;
+                    this.profileWrapperTarget.childNodes[1].textContent = response.detail;
                 }
             }
         })

@@ -18,15 +18,14 @@
 				</nav>
 				<div class="user-controls">
 					<div class="profile-picture" style="background-color:rgb(
-							{{ randomRGBFromString(app.user.firstName) }},
-							{{ randomRGBFromString(app.user.lastName) }},
-							{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }})"
-							onclick="window.location.replace('{{ path('app_profile_index')}}')">
+													{{ randomRGBFromString(app.user.firstName) }},
+													{{ randomRGBFromString(app.user.lastName) }},
+													{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }})" onclick="window.location.replace('{{ path('app_profile_index')}}')">
 						{{ app.user.firstName|first|upper }}{{ app.user.lastName|first|upper }}
 					</div>
-					<span class="username"
-							onclick="window.location.replace('{{ path('app_profile_index')}}')">
-							{{ app.user.firstName }} {{ app.user.lastName }}</span>
+					<span class="username" onclick="window.location.replace('{{ path('app_profile_index')}}')">
+						{{ app.user.firstName }}
+						{{ app.user.lastName }}</span>
 					<a href="{{ logout_path() }}">Log out</a>
 				</div>
 			{% elseif app.request.pathInfo == '/login' %}
@@ -41,10 +40,16 @@
 
 	{% block page_footer %}
 		<div class="page-footer">
-			<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
-			<span class="logo-caption">SpendScout</span>
-			<div
-				class="footer-links"><!-- Links go here -->
+			<div class="logo-wrapper">
+				<img src="{{ asset('images/logo.png') }}" alt="SpendScout Logo" height="50" width="50"/>
+				<span class="logo-caption">SpendScout</span>
+			</div>
+			<div class="footer-links">
+				<a href="#">About</a>
+				<a href="#">Contacts</a>
+				<a href="#">Terms and Conditions</a>
+				<a href="#">Mobile app</a>
+				<a href="https://perspecta-soft.com/bg/"><img src="https://perspecta-soft.com/Src/Site/public/img/logo.svg?v=2" alt="Perspecta Logo" width="80"/></a>
 			</div>
 			<div class="trademark">
 				© SpendScout by Perspecta. 2024. An expense tracking app.

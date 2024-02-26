@@ -28,6 +28,8 @@ security:
         secured_area:
             form_login:
                 enable_csrf: true
+            logout:
+                enable_csrf: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

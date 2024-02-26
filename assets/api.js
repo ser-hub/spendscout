@@ -8,20 +8,22 @@ async function request(method, url, data) {
 
   if (data !== undefined) {
     options.headers["Content-Type"] = "application/json";
-    //data.csrf = localStorage.getItem('csrf-token');
     options.body = JSON.stringify(data);
+  }
+
+  // set CSRF Token
+  const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  if (csrf_token != undefined) {
+    options.headers["anti-csrf-token"] = csrf_token;
   }
 
   const response = await fetch(host + url, options);
 
   try {
     return await response.json().then((response) => {
-      /*if (response.csrfToken !== undefined) {
-        localStorage.setItem('csrf-token', response.csrfToken);
-      }*/
 
       return response;
-    });  
+    });
   } catch (error) {
     return {
       detail: "Something went wrong"

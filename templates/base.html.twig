@@ -2,6 +2,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		{% if token is defined %}
+			<meta name="csrf-token" content="{{ csrf_token(token) }}">
+		{% endif %}
 		<title>
 			{% block title %}
 				SpendScout
@@ -9,10 +12,9 @@
 		</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
-		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
-		{% block stylesheets %}
-		{% endblock %}
+		<link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}"/>
+		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet"> 
+		{% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
 			{% block importmap %}

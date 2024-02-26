@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Entry;
 use App\Entity\Tag;
 use App\Entity\Currency;
-use App\Entity\User;
 use App\Utilities\ErrorMessages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -19,7 +18,7 @@ class HomeController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private ErrorMessages $errorMessages
+        private ErrorMessages $errorMessages,
     ) {
     }
 
