@@ -19,7 +19,7 @@ class EntryCalculator
         }
 
         if ($currency && array_key_exists($currency, $totalExpenses)) {
-            return [$currency => $totalExpenses[$currencyCode]];
+            return [$currency => $totalExpenses[$currency]];
         }
 
         return $totalExpenses;
@@ -41,7 +41,7 @@ class EntryCalculator
 
 
         if ($currency && array_key_exists($currency, $totalIncome)) {
-            return [$currency => $totalIncome[$currencyCode]];
+            return [$currency => $totalIncome[$currency]];
         }
 
         return $totalIncome;

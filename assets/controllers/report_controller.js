@@ -23,7 +23,7 @@ export default class extends Controller {
         };
 
         const currencyCode = this.reportFormCurrencyTarget.options[this.reportFormCurrencyTarget.selectedIndex].id;
-        let chartTitle = `[${currencyCode}] Statistics`;
+        let chartTitle = `[${currencyCode}] Report`;
 
         let queryString = '/reports/stats?currencyId=' + filters.currencyId;
 

@@ -14,8 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-
-class TokenCheckSubscriber implements EventSubscriberInterface
+class AjaxCsrfProtectionSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private Environment $twig,

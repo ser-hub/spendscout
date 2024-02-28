@@ -7,7 +7,7 @@
 {% block page_content %}
 	<div class="layout-horizontal" data-controller="report">
 		<div class="pie">
-			<h3 class="chart-title" data-report-target="reportChartTitle">[{{ set_currency }}] Statistics</h3>
+			<h3 class="chart-title" data-report-target="reportChartTitle">[{{ set_currency }}] Report</h3>
 			{{ render_chart(pie_chart, {
 				'data-report-target': 'reportChart',
 				'id': 'report-chart'
