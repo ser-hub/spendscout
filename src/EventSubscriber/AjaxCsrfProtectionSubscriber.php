@@ -24,7 +24,7 @@ class AjaxCsrfProtectionSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (preg_match('/login|register/', $event->getRequest()->getUri())) return;
+        if (preg_match('/login|register|password/', $event->getRequest()->getUri())) return;
 
         $requestMethod = $event->getRequest()->getMethod();
         $isStateChangingRequest = preg_match('/POST|PUT|PATCH|DELETE/', $requestMethod);
@@ -51,7 +51,7 @@ class AjaxCsrfProtectionSubscriber implements EventSubscriberInterface
 
     public function onKernelView(ViewEvent $event): void
     {
-        if (preg_match('/login|register/', $event->getRequest()->getUri())) return;
+        if (preg_match('/login|register|password/', $event->getRequest()->getUri())) return;
         
         $controllerResult = $event->getControllerResult();
         $controllerResult['token'] = 'ajax_token';

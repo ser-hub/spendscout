@@ -18,9 +18,9 @@
 				</nav>
 				<div class="user-controls">
 					<div class="profile-picture" style="background-color:rgb(
-													{{ randomRGBFromString(app.user.firstName) }},
-													{{ randomRGBFromString(app.user.lastName) }},
-													{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }})" onclick="window.location.replace('{{ path('app_profile_index')}}')">
+													{{ randomRGBFromString(app.user.firstName, 255) }},
+													{{ randomRGBFromString(app.user.lastName, 255) }},
+													{{ randomRGBFromString(app.user.firstName ~ app.user.firstName, 255) }})" onclick="window.location.replace('{{ path('app_profile_index')}}')">
 						{{ app.user.firstName|first|upper }}{{ app.user.lastName|first|upper }}
 					</div>
 					<span class="username" onclick="window.location.replace('{{ path('app_profile_index')}}')">

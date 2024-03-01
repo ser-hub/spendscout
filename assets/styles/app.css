@@ -1,7 +1,8 @@
 * {
     font-family: 'Rubik', sans-serif;
     --main-color: #FFFF00;
-    --secondary-color: #E6C715; /* Kind of dirty yellow so it contrasts with the white background */
+    --secondary-color: #E6C715;
+    /* Kind of dirty yellow so it contrasts with the white background */
     --gray: #F5F5F5;
 }
 
@@ -45,7 +46,8 @@ a {
     justify-content: space-between;
 }
 
-.page-header > span, nav {
+.page-header>span,
+nav {
     padding-top: 15px;
 }
 
@@ -179,7 +181,7 @@ a {
     background-color: white;
 }
 
-form .white-btn, 
+form .white-btn,
 form .yellow-btn {
     margin-left: 0;
 }
@@ -228,6 +230,11 @@ input[type=text] {
 
 .new-animate {
     animation: new-animation 500ms 5 linear;
+}
+
+.turbo-progress-bar {
+    height: 5px;
+    background-color: var(--secondary-color);
 }
 
 @keyframes new-animation {

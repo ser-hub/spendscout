@@ -8,9 +8,9 @@
     <div class="layout-horizontal" data-controller="profile">
         <div class="profile-wrapper" data-profile-target="profileWrapper">
         <div class="profile-picture" style="background-color:rgb(
-							{{ randomRGBFromString(app.user.firstName) }},
-							{{ randomRGBFromString(app.user.lastName) }},
-							{{ randomRGBFromString(app.user.firstName ~ app.user.firstName) }});
+							{{ randomRGBFromString(app.user.firstName, 255) }},
+							{{ randomRGBFromString(app.user.lastName, 255) }},
+							{{ randomRGBFromString(app.user.firstName ~ app.user.firstName, 255) }});
                             width: 50px;
                             height: 50px;">
 						{{ app.user.firstName|first|upper }}{{ app.user.lastName|first|upper }}

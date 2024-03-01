@@ -14,7 +14,7 @@ class RandomNumberExtension extends AbstractExtension
         ];
     }
 
-    public function generateNumber(string $text): int
+    public function generateNumber(string $text, int $limit = null): int
     {
         $sum = 0;
 
@@ -22,6 +22,10 @@ class RandomNumberExtension extends AbstractExtension
             $sum += ord($text[$i]);
         }
 
-        return $sum % 255;
+        if ($limit) {
+            return $sum % $limit + 1;
+        } else {
+            return $sum;
+        }
     }
 }
