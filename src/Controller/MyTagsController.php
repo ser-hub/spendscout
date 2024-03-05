@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/my-tags', name: 'app_my_tags')]
+#[Route('/mytags', name: 'app_my_tags')]
 class MyTagsController extends AbstractController
 {
 
@@ -21,7 +21,7 @@ class MyTagsController extends AbstractController
     }
 
     #[Route('', name: '_index')]
-    #[Template('my_tags/index.html.twig')]
+    #[Template('mytags/index.html.twig')]
     public function index(): array
     {
         return [

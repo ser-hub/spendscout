@@ -88,7 +88,7 @@ export default class extends Controller {
     }
 
     async entryFormSubmit() {
-        const entryData = this.getentryDataFromEntryForm();
+        const entryData = this.getEntryDataFromEntryForm();
         if (entryData.name != undefined && entryData.name != '') {
             const response = await api.post(this.endpoint, entryData).then((entry) => {
                 return entry;
@@ -141,7 +141,7 @@ export default class extends Controller {
     async editEntry(event) {
         const id = event.currentTarget.dataset.targetId;
 
-        const entryData = this.getentryDataFromEntryForm();
+        const entryData = this.getEntryDataFromEntryForm();
 
         let response = await api.put(this.endpoint + '/' + id, entryData).then((response) => {
             return response;
@@ -167,6 +167,7 @@ export default class extends Controller {
             this.displayGeneralError();
         } else {
             this.entriesState();
+            this.clearEntryForm();
         }
     }
 
@@ -198,6 +199,7 @@ export default class extends Controller {
         const month = ("0" + (dateObject.getMonth() + 1)).slice(-2);
         const date = dateObject.getFullYear() + "-" + month + "-" + day;
         this.entryFormDateTarget.value = date;
+        this.entryEditBtnTarget.dataset.targetId = '';
     }
 
     clearControls() {
@@ -555,7 +557,7 @@ export default class extends Controller {
         return entryWrapper;
     }
 
-    getentryDataFromEntryForm() {
+    getEntryDataFromEntryForm() {
         if (!this.expenseRadioTarget.checked && !this.incomeRadioTarget.checked) {
             return false;
         }

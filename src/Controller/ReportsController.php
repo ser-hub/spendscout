@@ -94,7 +94,7 @@ class ReportsController extends AbstractController
         ];
     }
 
-    #[Route('/stats', name: '_stats', methods: ['GET'])]
+    #[Route('/report', name: '_report', methods: ['GET'])]
     public function getStatistics(
         #[MapQueryParameter] int $currencyId = null,
         #[MapQueryParameter] int $tagId = null,

@@ -6,11 +6,11 @@
 	<form class="entry-form">
 		<span class="entry-form-radios">
 			<div class="radio-wrapper">
-				<input type="radio" id="income" name="is_expense" required data-action="entry#selectIncome" data-entry-target="incomeRadio">
+				<input type="radio" id="income" name="_isExpense" required data-action="entry#selectIncome" data-entry-target="incomeRadio">
 				<label for="income" data-entry-target="incomeLabel" style="margin-top: 2px">I received money</label><br>
 			</div>
 			<div class="radio-wrapper">
-				<input type="radio" id="expense" name="is_expense" data-action="entry#selectExpense" data-entry-target="expenseRadio" required>
+				<input type="radio" id="expense" name="_isExpense" data-action="entry#selectExpense" data-entry-target="expenseRadio" required>
 				<label for="expense" data-entry-target="expenseLabel" style="margin-top: 3px">I spent money</label>
 			</div>
 		</span>
@@ -18,7 +18,7 @@
 			<div class="form-error" data-entry-target="entryFormError"></div>
 			<input type="text" id="name" name="_name" placeholder="From/On" data-entry-target="entryFormName">
 		</div>
-		<select name="tags" id="tags" data-entry-target="entryFormTag">
+		<select name="_tag" id="tags" data-entry-target="entryFormTag">
 			{% for tag in user_tags %}
 				<option value="{{ tag.id }}" id="{{ tag.name }}">
 					{{ tag.name }}
@@ -34,7 +34,7 @@
 			<div class="form-error" data-entry-target="entryFormError"></div>
 			<input type="text" id="amount" name="_amount" placeholder="Amount" title="Format: .99" data-entry-target="entryFormAmount">
 		</div>
-		<select name="currencies" id="currencies" data-entry-target="entryFormCurrency">
+		<select name="_currency" id="currencies" data-entry-target="entryFormCurrency">
 			{% for currency in currencies %}
 				<option value="{{ currency.id }}" id="{{ currency.code }}">
 					{{ currency.code|currency_symbol('bg') }}
@@ -42,7 +42,7 @@
 				</option>
 			{% endfor %}
 		</select>
-		<input type="date" id="entry-date" name="entry-date" data-entry-target="entryFormDate"/>
-		<button type="submit" class="yellow-btn" data-action="entry#entryFormSubmit:prevent" data-entry-target="entryEditBtn">Save</button>
+		<input type="date" id="entry-date" name="_entryDate" data-entry-target="entryFormDate"/>
+		<button class="yellow-btn" data-action="entry#entryFormSubmit:prevent" data-entry-target="entryEditBtn">Save</button>
 	</form>
 </div>

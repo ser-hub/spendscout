@@ -25,7 +25,7 @@ export default class extends Controller {
         const currencyCode = this.reportFormCurrencyTarget.options[this.reportFormCurrencyTarget.selectedIndex].id;
         let chartTitle = `[${currencyCode}] Report`;
 
-        let queryString = '/reports/stats?currencyId=' + filters.currencyId;
+        let queryString = '/reports/report?currencyId=' + filters.currencyId;
 
         if (filters.tagId != '') {
             queryString += '&tagId=' + filters.tagId;

@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import * as api from './../api.js';
+import * as api from '../api.js';
 
 export default class extends Controller {
     static targets = [
@@ -10,7 +10,7 @@ export default class extends Controller {
         "tagEditBtn"
     ];
 
-    endpoint = '/my-tags/tags';
+    endpoint = '/mytags/tags';
 
     displayTags(tags, scrollToId) {
         this.tagsGridTarget.innerHTML = "";
@@ -82,7 +82,7 @@ export default class extends Controller {
 
             this.tagsFormNameTarget.value = tagToEdit.name;
 
-            this.tagEditBtnTarget.dataset.action = "my-tags#editTag";
+            this.tagEditBtnTarget.dataset.action = "mytags#editTag";
             this.tagEditBtnTarget.dataset.targetId = tagToEdit.id;
         }
     }
@@ -136,13 +136,13 @@ export default class extends Controller {
         editBtn.classList.add('fa-solid');
         editBtn.classList.add('fa-pencil');
         editBtn.classList.add('fa-xl');
-        editBtn.dataset.action = 'click->my-tags#editMode';
+        editBtn.dataset.action = 'click->mytags#editMode';
 
         const deleteBtn = document.createElement('i');
         deleteBtn.classList.add('fa-solid');
         deleteBtn.classList.add('fa-trash');
         deleteBtn.classList.add('fa-xl');
-        deleteBtn.dataset.action = 'click->my-tags#deleteTag';
+        deleteBtn.dataset.action = 'click->mytags#deleteTag';
 
         tagWrapper.textContent = tag.name;
         controlsWrapper.append(editBtn, deleteBtn);
@@ -164,6 +164,6 @@ export default class extends Controller {
         this.tagsFormStatusTarget.textContent = "Create Tag";
         this.tagsFormNameTarget.value = "";
         this.formErrorTarget.textContent = "";
-        this.tagEditBtnTarget.dataset.action = "my-tags#tagFormSubmit";
+        this.tagEditBtnTarget.dataset.action = "mytags#tagFormSubmit";
     }
 }
