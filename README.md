@@ -60,11 +60,17 @@ symfony console doctrine:database:create
 symfony console doctrine:migrations:migrate
 symfony console doctrine:fixtures:load
 ```
-6. Install certificate authority for the local server:
+6. Run tests (optional)
+
+Set env variable in `.env` to `test` and run
+```bash
+php bin/phpunit
+```
+8. Install certificate authority for the local server:
 ```bash
 symfony server:ca:install
 ```
-7. Start the Symfony server by runing the command:
+8. Start the Symfony server by runing the command:
 ```bash
 symfony server:start
 ```
