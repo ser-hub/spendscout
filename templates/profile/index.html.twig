@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="layout-horizontal" data-controller="profile">
+    <div class="layout-horizontal" data-controller="profile" data-endpoint-info="{{ path('app_profile_edit') }} " data-endpoint-password="{{ path('app_profile_password') }} ">
         <div class="profile-wrapper" data-profile-target="profileWrapper">
         <div class="profile-picture" style="background-color:rgb(
 							{{ randomRGBFromString(app.user.firstName, 255) }},

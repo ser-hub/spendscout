@@ -10,7 +10,9 @@ export default class extends Controller {
         "tagEditBtn"
     ];
 
-    endpoint = '/mytags/tags';
+    connect() {
+        this.endpoint = this.element.dataset.endpoint;
+    }
 
     displayTags(tags, scrollToId) {
         this.tagsGridTarget.innerHTML = "";
@@ -111,7 +113,6 @@ export default class extends Controller {
     }
 
     async deleteTag(event) {
-        console.log(event.currentTarget.parentNode.parentNode)
         const id = event.currentTarget.parentNode.parentNode.dataset.id;
         const response = await api.del(this.endpoint + '/' + id).then((result) => {
             return result;

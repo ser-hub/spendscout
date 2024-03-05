@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block page_content %}
-	<div class="layout-horizontal" data-controller="admin entry" data-endpoint="" style="gap:1rem">
+	<div class="layout-horizontal" data-controller="admin entry" data-endpoint="{{ path('app_admin_search_users') }}" style="gap:1rem">
 		<div class="user-select-wrapper">
 			{% if users is not empty %}
 				<div>

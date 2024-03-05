@@ -27,11 +27,9 @@ export default class extends Controller {
         "generalError"
     ]
 
-    entriesState = this.refreshEntries;
-    endpoint = null;
-    adminMode = false;
-
     connect() {
+        this.entriesState = this.refreshEntries;
+        this.adminMode = false;
         this.endpoint = this.element.dataset.endpoint;
         this.entriesState();
         this.clearEntryForm();
@@ -81,7 +79,8 @@ export default class extends Controller {
     }
 
     async refreshEntries(scrollToId) {
-        let allEntries = await this.getEntries().then((entriesResult) => {
+        const allEntries = await this.getEntries().then((entriesResult) => {
+            if (!(entriesResult instanceof Array)) return [];
             return entriesResult;
         });
         this.displayEntries(allEntries, scrollToId);

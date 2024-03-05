@@ -8,6 +8,10 @@ export default class extends Controller {
         "entriesGrid"
     ];
 
+    connect() {
+        this.endpoint = this.element.dataset.endpoint;
+    }
+
     selectUser(event, target) {
         this.userGridTarget.childNodes.forEach(node => {
             if (node.nodeName == 'DIV' && node.classList.contains('select-user') && node != event.currentTarget) {
@@ -31,7 +35,7 @@ export default class extends Controller {
     }
 
     async getUsers(keyword) {
-        return await api.get('/admin/search?keyword=' + keyword).then((response) => {
+        return await api.get(this.endpoint + '?keyword=' + keyword).then((response) => {
             return response;
         });
     }

@@ -29,13 +29,13 @@ class MyTagsController extends AbstractController
         ];
     }
 
-    #[Route('/tags', name: 'get_all_user_tags', methods: ['GET'])]
+    #[Route('/tags', name: '_get_all_user_tags', methods: ['GET'])]
     public function getAllUserTags(): JsonResponse
     {
         return $this->json($this->getUser()->getTagsCircularReferenceSafe());
     }
 
-    #[Route('/tags/{id<\d+>}', name: 'get_tag', methods: ['GET'])]
+    #[Route('/tags/{id<\d+>}', name: '_get_tag', methods: ['GET'])]
     public function getTag(?Tag $tag): JsonResponse
     {
         if (!$tag) {
@@ -48,7 +48,7 @@ class MyTagsController extends AbstractController
         return $this->json($tag);
     }
 
-    #[Route('/tags', name: 'add_tag', methods: ['POST'], format: 'json')]
+    #[Route('/tags', name: '_add_tag', methods: ['POST'], format: 'json')]
     public function addTag(#[MapRequestPayload(acceptFormat: 'json')] Tag $tag): JsonResponse
     {
         $tag->setUser($this->getUser());
@@ -58,7 +58,7 @@ class MyTagsController extends AbstractController
         return $this->json($tag->circularReferenceSafe());
     }
 
-    #[Route('/tags/{id<\d+>}', name: 'update_tag', methods: ['PUT'], format: 'json')]
+    #[Route('/tags/{id<\d+>}', name: '_update_tag', methods: ['PUT'], format: 'json')]
     public function updateTag(Tag $tag, #[MapRequestPayload(acceptFormat: 'json')] Tag $tagDTO): JsonResponse
     {
         if (!$tag) {
@@ -74,7 +74,7 @@ class MyTagsController extends AbstractController
         return $this->json($tag->circularReferenceSafe());
     }
 
-    #[Route('/tags/{id<\d+>}', name: 'delete_tag', methods: ['DELETE'])]
+    #[Route('/tags/{id<\d+>}', name: '_delete_tag', methods: ['DELETE'])]
     public function deleteTag(?Tag $tag): JsonResponse
     {
         if (!$tag) {

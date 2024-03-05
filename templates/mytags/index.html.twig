@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_content %}
-	<div class="layout-horizontal" data-controller="mytags">
+	<div class="layout-horizontal" data-controller="mytags" data-endpoint="{{ path('app_my_tags_get_all_user_tags') }}">
 		<div class="tags-grid" data-mytags-target="tagsGrid">
 			{% for tag in user_tags %}
 				<div class="tag-wrapper" data-id="{{ tag.id }}">

@@ -90,7 +90,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/password', name: '_edit_password')]
+    #[Route('/password', name: '_password')]
     public function editPassword(Request $request, UserPasswordHasherInterface $userPasswordHasher): JsonResponse
     {
         $newPassword = $request->getPayload()->get('password');

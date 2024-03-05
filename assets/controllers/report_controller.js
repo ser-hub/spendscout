@@ -13,6 +13,10 @@ export default class extends Controller {
         "reportFormDateTo",
     ];
 
+    connect() {
+        this.endpoint = this.element.dataset.endpoint;
+    }
+
     async applyFilters() {
         const pie = Chart.getChart('report-chart');
         const filters = {
@@ -25,7 +29,7 @@ export default class extends Controller {
         const currencyCode = this.reportFormCurrencyTarget.options[this.reportFormCurrencyTarget.selectedIndex].id;
         let chartTitle = `[${currencyCode}] Report`;
 
-        let queryString = '/reports/report?currencyId=' + filters.currencyId;
+        let queryString = this.endpoint + '?currencyId=' + filters.currencyId;
 
         if (filters.tagId != '') {
             queryString += '&tagId=' + filters.tagId;

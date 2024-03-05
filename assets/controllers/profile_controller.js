@@ -11,7 +11,11 @@ export default class extends Controller {
         "changePasswordBtn",
     ]
 
-    profileWrapperDefaultHTML = null;
+    connect() {
+        this.endpointInfo = this.element.dataset.endpointInfo;
+        this.endpointPassword = this.element.dataset.endpointPassword;
+        this.profileWrapperDefaultHTML = null;
+    }
 
     async submitProfileForm() {
         const data = {
@@ -20,7 +24,7 @@ export default class extends Controller {
             email: this.profileFormEmailTarget.value
         }
 
-        await api.post('/profile/edit', data).then((response) => {
+        await api.post(this.endpointInfo, data).then((response) => {
             if (response.firstName != undefined) {
                 this.profileWrapperTarget.childNodes[3].textContent = 'Profile updated';
                 this.profileFormFirstNameTarget.value = response.firstName;
@@ -83,7 +87,7 @@ export default class extends Controller {
             password: this.profileWrapperTarget.childNodes[2].value
         }
 
-        await api.post('/profile/password', data).then((response) => {
+        await api.post(this.endpointPassword, data).then((response) => {
             if (response === 'Your password has been updated successfully') {
                 this.profileWrapperTarget.childNodes[2].value = "";
                 this.profileWrapperTarget.childNodes[1].textContent = response;
