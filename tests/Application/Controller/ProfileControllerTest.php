@@ -42,7 +42,6 @@ class ProfileControllerTest extends WebTestCase
         $this->profileData = [
             'firstName' => 'Testa',
             'lastName' => 'Testova',
-            'email' => 'testa1testova@email.com'
         ];
     }
 
@@ -50,7 +49,7 @@ class ProfileControllerTest extends WebTestCase
     {
         $csrfToken = $this->crawler->filter("meta[name=csrf-token]")->attr('content');
         $this->assertNotEmpty($csrfToken);
-        $this->client->jsonRequest('POST', '/profile/edit', $this->profileData, [
+        $this->client->jsonRequest('POST', '/profile/info', $this->profileData, [
             'HTTP_anti-csrf-token' => $csrfToken]);
         $this->assertResponseIsSuccessful();
 
@@ -60,27 +59,27 @@ class ProfileControllerTest extends WebTestCase
         $this->assertNotNull($user);
         $this->assertEquals($this->profileData['firstName'], $user->getFirstName());
         $this->assertEquals($this->profileData['lastName'], $user->getLastName());
-        $this->assertEquals($this->profileData['email'], $user->getEmail());
     }
 
     public function testEditProfileInfoUnprocessable(): void
     {
         $csrfToken = $this->crawler->filter("meta[name=csrf-token]")->attr('content');
         $this->assertNotEmpty($csrfToken);
-        $this->profileData['email'] = '';
-        $this->client->jsonRequest('POST', '/profile/edit', $this->profileData, [
+        $this->profileData['firstName'] = 'Testa1';
+        $this->client->jsonRequest('POST', '/profile/info', $this->profileData, [
             'HTTP_anti-csrf-token' => $csrfToken]);
         $this->assertResponseIsUnprocessable();
     }
 
-    public function testEditProlfiePasswordSuccess(): void
+    public function testEditProlfieLoginCredentialsSuccess(): void
     {
         $security = $this->container->get(Security::class);
         $oldPassword = $security->getUser()->getPassword();
 
         $csrfToken = $this->crawler->filter("meta[name=csrf-token]")->attr('content');
         $this->assertNotEmpty($csrfToken);
-        $this->client->jsonRequest('PUT', '/profile/password', [
+        $this->client->jsonRequest('PUT', '/profile/credentials', [
+            'email' => 'testa1testova@email.com',
             'password' => '123456tTTT*'
         ], [
             'HTTP_anti-csrf-token' => $csrfToken]);
@@ -89,13 +88,15 @@ class ProfileControllerTest extends WebTestCase
         $security = $this->container->get(Security::class);
         $this->assertNotNull($security->getUser());
         $this->assertNotEquals($security->getUser()->getPassword(), $oldPassword);
+        $this->assertEquals($security->getUser()->getEmail(), 'testa1testova@email.com');
     }
 
-    public function testEditProfilePasswordUnprocessable(): void
+    public function testEditProfileLoginCredentialsUnprocessable(): void
     {
         $csrfToken = $this->crawler->filter("meta[name=csrf-token]")->attr('content');
         $this->assertNotEmpty($csrfToken);
-        $this->client->jsonRequest('PUT', '/profile/password', [
+        $this->client->jsonRequest('PUT', '/profile/credentials', [
+            'email' => 'test1testov@email.com',
             'password' => '123456'
         ], [
             'HTTP_anti-csrf-token' => $csrfToken]);

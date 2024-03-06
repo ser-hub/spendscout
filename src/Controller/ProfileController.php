@@ -34,15 +34,10 @@ class ProfileController extends AbstractController
         return [];
     }
 
-    #[Route('/edit', name: '_edit')]
-    public function editProfile(
-        #[MapRequestPayload(acceptFormat: 'json')] UserDTO $userDto,
-        EmailVerifier $emailVerifier,
-    ): JsonResponse {
-        $newFirstName = $userDto->firstName;
-        $newLastName = $userDto->lastName;
-        $newEmail = $userDto->email;
-        $oldEmail = $this->getUser()->getUserIdentifier();
+    #[Route('/info', name: '_edit')]
+    public function editProfile(Request $request): JsonResponse {
+        $newFirstName = $request->getPayload()->get('firstName');
+        $newLastName = $request->getPayload()->get('lastName');
 
         if ($newFirstName != $this->getUser()->getFirstName()) {
             $this->getUser()->setFirstName($newFirstName);
@@ -52,15 +47,9 @@ class ProfileController extends AbstractController
             $this->getUser()->setLastName($newLastName);
         }
 
-        if ($newEmail != $oldEmail) {
-            $this->getUser()->setEmail($newEmail);
-        }
-
         $errors = $this->validator->validate($this->getUser());
 
         if (count($errors) > 0) {
-            $this->getUser()->setEmail($oldEmail);
-
             return $this->json([
                 'title' => 'Validation Failed',
                 'detail' => (string) $errors
@@ -69,7 +58,59 @@ class ProfileController extends AbstractController
 
         $this->entityManager->flush();
 
-        if ($newEmail != $oldEmail) {
+        return $this->json([
+            'message' => 'Profile updated',
+            'firstName' => $this->getUser()->getFirstName(),
+            'lastName' => $this->getUser()->getLastName(),
+        ]);
+    }
+
+    #[Route('/credentials', name: '_credentials')]
+    public function editCredentials(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EmailVerifier $emailVerifier
+    ): JsonResponse {
+        $newPassword = $request->getPayload()->get('password');
+        $newEmail = $request->getPayload()->get('email');
+        $oldEmail = $this->getUser()->getUserIdentifier();
+
+        if ($newPassword && $newPassword != '') {
+            if (!preg_match('/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,}$/', $newPassword) || strlen($newPassword) > 4096) {
+                return $this->json([
+                    'title' => 'Validation Failed',
+                    'detail' => 'The new password does not meet the requirements'
+                ], 422);
+            }
+
+            $this->getUser()->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $this->getUser(),
+                    $newPassword
+                )
+            );
+        }
+
+        if ($newEmail && $newEmail != '') {
+            if ($newEmail != $oldEmail) {
+                $this->getUser()->setEmail($newEmail);
+            }
+
+            $errors = $this->validator->validate($this->getUser());
+
+            if (count($errors) > 0) {
+                $this->getUser()->setEmail($oldEmail);
+
+                return $this->json([
+                    'title' => 'Validation Failed',
+                    'detail' => (string) $errors
+                ], 422);
+            }
+        }
+
+        $this->entityManager->flush();
+
+        if ($this->getUser()->getEmail() != $oldEmail) {
             $this->security->login($this->getUser());
 
             $emailVerifier->sendEmailConfirmation(
@@ -84,33 +125,8 @@ class ProfileController extends AbstractController
         }
 
         return $this->json([
-            'firstName' => $this->getUser()->getFirstName(),
-            'lastName' => $this->getUser()->getLastName(),
-            'email' => $this->getUser()->getUserIdentifier(),
+            'message' => 'Credentials updated',
+            'email' => $this->getUser()->getEmail()
         ]);
-    }
-
-    #[Route('/password', name: '_password')]
-    public function editPassword(Request $request, UserPasswordHasherInterface $userPasswordHasher): JsonResponse
-    {
-        $newPassword = $request->getPayload()->get('password');
-
-        if (!preg_match('/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,}$/', $newPassword) || strlen($newPassword) > 4096) {
-            return $this->json([
-                'title' => 'Validation Failed',
-                'detail' => 'Password does not meet the requirements'
-            ], 422);
-        }
-
-        $this->getUser()->setPassword(
-            $userPasswordHasher->hashPassword(
-                $this->getUser(),
-                $newPassword
-            )
-        );
-
-        $this->entityManager->flush();
-
-        return $this->json('Your password has been updated successfully');
     }
 }

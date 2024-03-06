@@ -23,17 +23,32 @@
     align-items: center;
 }
 
-#change-password-btn {
+.profile-form-bottom-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+#change-credentials-btn {
     background-color: white;
+    margin: auto;
     border: 0;
-    margin-left: .5rem;
-    margin-top: .5rem;
     cursor: pointer;
     color: var(--secondary-color);
 }
 
+#submit-btn {
+    margin: auto;
+}
+
+#email-change-field,
+#password-change-field {
+    width: 50%;
+}
+
 input[type=text] {
-    width: 96%;
+    width: 70%;
 }
 
 .error-message {

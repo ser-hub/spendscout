@@ -8,12 +8,11 @@ export default class extends Controller {
         "profileFormLastName",
         "profileFormEmail",
         "submitFormBtn",
-        "changePasswordBtn",
     ]
 
     connect() {
         this.endpointInfo = this.element.dataset.endpointInfo;
-        this.endpointPassword = this.element.dataset.endpointPassword;
+        this.endpointCredentials = this.element.dataset.endpointCredentials;
         this.profileWrapperDefaultHTML = null;
     }
 
@@ -21,15 +20,13 @@ export default class extends Controller {
         const data = {
             firstName: this.profileFormFirstNameTarget.value,
             lastName: this.profileFormLastNameTarget.value,
-            email: this.profileFormEmailTarget.value
         }
 
         await api.post(this.endpointInfo, data).then((response) => {
             if (response.firstName != undefined) {
-                this.profileWrapperTarget.childNodes[3].textContent = 'Profile updated';
+                this.profileWrapperTarget.childNodes[3].textContent = response.message;
                 this.profileFormFirstNameTarget.value = response.firstName;
                 this.profileFormLastNameTarget.value = response.lastName;
-                this.profileFormEmailTarget.value = response.email;
             } else {
                 if (response.title === 'Validation Failed') {
                     this.profileWrapperTarget.childNodes[3].textContent = response.detail.split(':')[1].split('(')[0];
@@ -40,24 +37,31 @@ export default class extends Controller {
         })
     }
 
-    changePasswordMode() {
+    changeCredentialsMode(event) {
         this.profileWrapperDefaultHTML = this.profileWrapperTarget.innerHTML;
 
         const profilePictureNode = this.profileWrapperTarget.childNodes[1];
         const errorFiled = document.createElement('div');
-        const textField = document.createElement('input');
+        const emailField = document.createElement('input');
+        const passwordField = document.createElement('input');
         const saveBtn = document.createElement('button');
         const backBtn = document.createElement('button');
 
         errorFiled.classList.add('error-message');
 
-        textField.placeholder = 'New password';
-        textField.id = 'password-change-field';
-        textField.name = 'new-password';
-        textField.type = 'password';
+        passwordField.placeholder = 'New password';
+        passwordField.id = 'password-change-field';
+        passwordField.name = 'new-password';
+        passwordField.type = 'password';
 
-        saveBtn.dataset.action = 'profile#changePasswordSubmit';
-        saveBtn.innerHTML = 'Change my password';
+        emailField.value = event.currentTarget.dataset.email;
+        emailField.placeholder = 'New email';
+        emailField.id = 'email-change-field';
+        emailField.name = 'new-email';
+        emailField.type = 'email';
+
+        saveBtn.dataset.action = 'profile#newCredentialsSubmit';
+        saveBtn.innerHTML = 'Change my credentials';
         saveBtn.classList.remove('yellow-btn');
         saveBtn.classList.add('white-btn');
 
@@ -75,22 +79,25 @@ export default class extends Controller {
         message.innerHTML = 'Your new password must be at least 8 characters long and must contain: <ul><li>an uppercase and a lowercase letter,</li><li>a special symbol,</li><li>and a number.</li></ul>';
 
         this.profileWrapperTarget.innerHTML = '';
-        this.profileWrapperTarget.append(profilePictureNode, errorFiled, textField, bottom, message);
+        this.profileWrapperTarget.append(profilePictureNode, errorFiled, emailField, passwordField, bottom, message);
     }
 
     defaultMode() {
         this.profileWrapperTarget.innerHTML = this.profileWrapperDefaultHTML;
     }
 
-    async changePasswordSubmit() {
+    async newCredentialsSubmit() {
         const data = {
-            password: this.profileWrapperTarget.childNodes[2].value
+            password: this.profileWrapperTarget.childNodes[3].value,
+            email: this.profileWrapperTarget.childNodes[2].value
         }
 
-        await api.post(this.endpointPassword, data).then((response) => {
-            if (response === 'Your password has been updated successfully') {
-                this.profileWrapperTarget.childNodes[2].value = "";
-                this.profileWrapperTarget.childNodes[1].textContent = response;
+        console.log(data)
+
+        await api.post(this.endpointCredentials, data).then((response) => {
+            if (response.email != undefined) {
+                this.profileWrapperTarget.childNodes[2].value = response.email;
+                this.profileWrapperTarget.childNodes[1].textContent = response.message;
             } else {
                 if (response.title === 'Validation Failed') {
                     this.profileWrapperTarget.childNodes[1].textContent = response.detail;

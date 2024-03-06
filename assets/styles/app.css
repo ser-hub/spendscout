@@ -40,6 +40,7 @@ a {
 .page-header {
     margin-top: .5rem;
     margin-bottom: 1rem;
+    gap: .5rem;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -58,6 +59,8 @@ nav {
     margin-top: 1rem;
     display: flex;
     align-items: flex-end;
+    flex-wrap: wrap;
+    gap: .5rem;
 }
 
 .layout-horizontal {
@@ -95,7 +98,7 @@ nav {
 .header-nav {
     display: flex;
     gap: 0.7rem;
-    margin-left: 1rem;
+    margin-left: .5rem;
     flex-wrap: wrap;
     align-items: center;
     margin-right: auto;
@@ -143,13 +146,13 @@ nav {
 }
 
 .footer-links {
-    width: 100%;
     opacity: 80%;
     font-size: .9rem;
     font-weight: bold;
     display: flex;
     margin-left: 1rem;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .footer-links a {

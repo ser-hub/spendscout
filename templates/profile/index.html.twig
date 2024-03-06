@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="layout-horizontal" data-controller="profile" data-endpoint-info="{{ path('app_profile_edit') }} " data-endpoint-password="{{ path('app_profile_password') }} ">
+    <div class="layout-horizontal" data-controller="profile" data-endpoint-info="{{ path('app_profile_edit') }} " data-endpoint-credentials="{{ path('app_profile_credentials') }} ">
         <div class="profile-wrapper" data-profile-target="profileWrapper">
         <div class="profile-picture" style="background-color:rgb(
 							{{ randomRGBFromString(app.user.firstName, 255) }},
@@ -18,10 +18,9 @@
                     <div class="error-message"></div>
                     <input type="text" id="profile-first-name" name="_firstName" value="{{ app.user.firstName }}" data-profile-target="profileFormFirstName">
                     <input type="text" id="profile-last-name" name="_lastName" value="{{ app.user.lastName }}" data-profile-target="profileFormLastName">
-                    <input type="text" id="profile-email" name="_email" value="{{ app.user.email }}" data-profile-target="profileFormEmail">
-                    <div>
+                    <div class="profile-form-bottom-wrapper">
                         <button type="submit" id="submit-btn" class="yellow-btn" data-action="profile#submitProfileForm" data-profile-target="submitFormBtn">Save</button>
-                        <button type="submit" id="change-password-btn" data-action="profile#changePasswordMode" data-profile-target="changePasswordBtn">I want to change my password</button>
+                        <button type="submit" id="change-credentials-btn" data-action="profile#changeCredentialsMode" data-email="{{ app.user.email }}">I want to change my login credentials</button>
                     </div>
         </div>
     </div>

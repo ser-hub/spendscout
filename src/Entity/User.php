@@ -25,6 +25,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(
         message: '{{ value }} is not a valid email',
     )]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: "Email too long"
+    )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -39,15 +43,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[Assert\Regex(
-        pattern: '/^[a-zA-Z]{0,64}$/',
+        pattern: '/^[a-zA-Z]{1,64}$/',
         message: 'First name does not meet the requirements',
+    )]
+    #[Assert\Length(
+        min: 1,
+        minMessage: 'First name can not be empty'
     )]
     #[ORM\Column(length: 64)]
     private ?string $first_name = null;
 
     #[Assert\Regex(
-        pattern: '/^[a-zA-Z]{0,64}$/',
+        pattern: '/^[a-zA-Z]{1,64}$/',
         message: 'Last name does not meet the requirements',
+    )]
+    #[Assert\Length(
+        min: 1,
+        minMessage: 'Last name can not be empty'
     )]
     #[ORM\Column(length: 64)]
     private ?string $last_name = null;
