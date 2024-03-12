@@ -24,7 +24,6 @@ final class Version20240125135711 extends AbstractMigration
         $this->addSql('ALTER TABLE entry ADD CONSTRAINT FK_2B219D70A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE entry ADD CONSTRAINT FK_2B219D70BAD26311 FOREIGN KEY (tag_id) REFERENCES tag (id)');
         $this->addSql('ALTER TABLE entry ADD CONSTRAINT FK_2B219D7038248176 FOREIGN KEY (currency_id) REFERENCES currency (id)');
-        $this->addSql('ALTER TABLE tag ADD CONSTRAINT FK_389B783A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
     }
 
     public function down(Schema $schema): void
