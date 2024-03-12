@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
 
         for ($i = 1; $i <= 3; $i++) {
             $user = $this->createUser(
-                "Test". $i,
+                "Test",
                 "Testov",
                 "test" . $i . "testov@email.com",
                 "123456tT*"

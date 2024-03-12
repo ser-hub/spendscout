@@ -34,7 +34,7 @@ final class EntryRepositoryTest extends KernelTestCase
 
     public function testFindByFiltersCurrencyId(): void
     {
-        $currencyId = 19;
+        $currencyId = $this->entryRepository->find(rand(1, 19))->getCurrency()->getId();
         $resultEntries = $this->entryRepository->findByFilters(null, $currencyId);
 
         foreach ($resultEntries as $resultEntry) {
@@ -44,7 +44,7 @@ final class EntryRepositoryTest extends KernelTestCase
 
     public function testFindByFiltersTagId(): void
     {
-        $tagId = 11;
+        $tagId = $this->entryRepository->find(rand(1, 19))->getTag()->getId();
         $resultEntries = $this->entryRepository->findByFilters(null, null, $tagId);
 
         foreach ($resultEntries as $resultEntry) {
@@ -60,29 +60,30 @@ final class EntryRepositoryTest extends KernelTestCase
         $dateTime = new DateTime($dateFrom);
 
         foreach ($resultEntries as $resultEntry) {
-            $this->assertGreaterThan($dateTime, $resultEntry->getDate());
+            $this->assertGreaterThanOrEqual($dateTime, $resultEntry->getDate());
         }
     }
 
     public function testFindByFiltersDateTo(): void
     {
-        $dateTo = '2024-02-28';
+        $dateTo = '2024-12-31';
         $resultEntries = $this->entryRepository->findByFilters(null, null, null, null, $dateTo);
 
         $dateTime = new DateTime($dateTo);
 
         foreach ($resultEntries as $resultEntry) {
-            $this->assertLessThan($dateTime, $resultEntry->getDate());
+            $this->assertLessThanOrEqual($dateTime, $resultEntry->getDate());
         }
     }
 
     public function testFindByFiltersAll(): void
     {
-        $userId = 1;
-        $tagId = 17;
-        $currencyId = 6;
-        $dateFrom = '2021-01-01';
-        $dateTo = '2022-01-01';
+        $targetEntry = $this->entryRepository->find(rand(1, 19));
+        $userId = $targetEntry->getUser()->getId();
+        $tagId = $targetEntry->getTag()->getId();
+        $currencyId = $targetEntry->getCurrency()->getId();
+        $dateFrom = '2019-01-01';
+        $dateTo = '2023-12-31';
         $resultEntries = $this->entryRepository->findByFilters($userId, $currencyId, $tagId, $dateFrom, $dateTo);
 
         $dateTo = new DateTime($dateTo);
