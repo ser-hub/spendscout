@@ -50,7 +50,6 @@ git clone
 3. Install dependencies:
 ```bash
 composer install
-symfony console importmap:install
 ```
 
 4. Set up your environment variables by copying the `.env` file and update `.env.local` with your database credentials and other configuration options.
@@ -94,6 +93,6 @@ symfony server:start
 | Main color     | ![#E6C715](https://via.placeholder.com/10/e6c715?text=+) #E6C715 |
 | Secondary color | ![#ffff00](https://via.placeholder.com/10/ffff00?text=+) #FFFF00 |
 | Gray | ![#F5F5F5](https://via.placeholder.com/10/f5f5f5?text=+) #F5F5F5 |
-| white | ![#FFFFFF](https://via.placeholder.com/10/ffffff?text=+) #FFFFFF |
+| White | ![#FFFFFF](https://via.placeholder.com/10/ffffff?text=+) #FFFFFF |
 
 
