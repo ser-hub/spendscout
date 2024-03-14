@@ -1,5 +1,3 @@
-const host = "https://localhost:8000";
-
 async function request(method, url, data) {
   const options = {
     method,
@@ -17,7 +15,7 @@ async function request(method, url, data) {
     options.headers["anti-csrf-token"] = csrf_token;
   }
 
-  const response = await fetch(host + url, options);
+  const response = await fetch(url, options);
 
   try {
     return await response.json().then((response) => {
