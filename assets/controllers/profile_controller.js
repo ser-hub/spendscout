@@ -92,8 +92,6 @@ export default class extends Controller {
             email: this.profileWrapperTarget.childNodes[2].value
         }
 
-        console.log(data)
-
         await api.post(this.endpointCredentials, data).then((response) => {
             if (response.email != undefined) {
                 this.profileWrapperTarget.childNodes[2].value = response.email;

@@ -64,7 +64,6 @@ export default class extends Controller {
 
     async editMode(event) {
         const tagElement = event.currentTarget.parentNode.parentNode;
-        console.log(this.tagsGridTarget.childNodes)
         this.tagsGridTarget.childNodes.forEach((tagWrapper) => {
             if (tagWrapper.nodeName == "DIV" && tagWrapper.classList.contains('select') && tagWrapper !== tagElement) {
                 tagWrapper.classList.remove('select');

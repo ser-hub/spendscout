@@ -404,10 +404,8 @@ export default class extends Controller {
         }
 
         if (sortMode == 'asc') {
-            console.log(data.sort(amountSortFuncAsc))
             this.displayEntries(data.sort(amountSortFuncAsc), scrollToId);
         } else {
-            console.log(data.sort(amountSortFuncDesc))
             this.displayEntries(data.sort(amountSortFuncDesc), scrollToId);
         }
 
